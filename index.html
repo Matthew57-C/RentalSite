@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>HomeHaven Properties</title>
+  <link rel="stylesheet" href="css/main.css"/>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet"/>
+</head>
+<body>
+
+  <nav class="main-nav" id="mainNav">
+    <a href="index.html" class="nav-logo">HomeHaven</a>
+    <div class="nav-links">
+      <a href="student.html" class="nav-link">Student Rooms</a>
+      <a href="phuket.html" class="nav-link">Phuket Villa</a>
+      <a href="#contact" class="nav-link">Contact</a>
+    </div>
+    <button class="nav-toggle" id="navToggle" aria-label="Menu"><span></span><span></span><span></span></button>
+  </nav>
+
+  <!-- TRUE PARALLAX HERO: background is fixed, content scrolls over it -->
+  <section class="parallax-hero home-hero">
+    <div class="hero-content">
+      <p class="hero-eyebrow">Properties to feel at home in</p>
+      <h1 class="hero-title">Find your<br/><em>perfect space</em></h1>
+      <p class="hero-sub">Student rooms near Cambridge's colleges. A luxury villa in Phuket.</p>
+      <div class="hero-ctas">
+        <a href="student.html" class="btn btn-warm">Student Rooms</a>
+        <a href="phuket.html" class="btn btn-ghost">Phuket Villa</a>
+      </div>
+    </div>
+    <div class="scroll-hint"><span>Scroll</span><div class="scroll-hint-line"></div></div>
+  </section>
+
+  <!-- SPLIT PANELS — each with its own fixed background -->
+  <section class="split-intro">
+    <a href="student.html" class="split-panel split-student">
+      <div class="split-content">
+        <span class="split-tag">Student Living</span>
+        <h2>Rooms that feel<br/><em>like home</em></h2>
+        <p>Bills included, great locations, community built in.</p>
+        <span class="btn btn-ghost">Explore Rooms →</span>
+      </div>
+    </a>
+    <a href="phuket.html" class="split-panel split-holiday">
+      <div class="split-content">
+        <span class="split-tag">Phuket, Thailand</span>
+        <h2>Escape to<br/><em>paradise</em></h2>
+        <p>A private luxury villa steps from Kata Beach.</p>
+        <span class="btn btn-ghost">View the Villa →</span>
+      </div>
+    </a>
+  </section>
+
+  <!-- WHY US -->
+  <section class="why-section">
+    <div class="container">
+      <div class="reveal" style="text-align:center">
+        <span class="section-label">Why rent with us</span>
+        <h2 class="section-title centered">Everything taken care of</h2>
+      </div>
+      <div class="features-grid">
+        <div class="feature-card reveal reveal-delay-1">
+          <div class="feature-icon">⚡</div>
+          <h3>Fast Response</h3>
+          <p>Enquiries answered within 24 hours, viewings around you.</p>
+        </div>
+        <div class="feature-card reveal reveal-delay-2">
+          <div class="feature-icon">🔑</div>
+          <h3>Hassle-Free</h3>
+          <p>Clear contracts, transparent pricing, no hidden fees.</p>
+        </div>
+        <div class="feature-card reveal reveal-delay-3">
+          <div class="feature-icon">🏡</div>
+          <h3>Well-Maintained</h3>
+          <p>All properties inspected regularly. Issues resolved promptly.</p>
+        </div>
+        <div class="feature-card reveal reveal-delay-4">
+          <div class="feature-icon">📍</div>
+          <h3>Great Locations</h3>
+          <p>Cambridge city centre and the shores of Phuket.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PARALLAX QUOTE BAND -->
+  <div class="parallax-band student-band-parallax">
+    <div class="band-inner reveal">
+      <p class="band-quote">"The best accommodation I've ever rented. It genuinely felt like home."</p>
+      <cite class="band-cite">— Previous tenant, Cambridge</cite>
+    </div>
+  </div>
+
+  <!-- CONTACT -->
+  <section class="contact-section" id="contact">
+    <div class="container">
+      <div class="contact-grid">
+        <div class="reveal">
+          <span class="section-label">Get in touch</span>
+          <h2 class="section-title" style="margin-bottom:1rem">Let's talk</h2>
+          <p class="contact-text" style="color:var(--warm-muted);font-size:0.96rem;margin-bottom:2rem">Interested in a property or have a question? Drop us a message.</p>
+          <p class="contact-detail">📧 <a href="mailto:hello@homehaven.co.uk">hello@homehaven.co.uk</a></p>
+          <p class="contact-detail">📞 <a href="tel:+441234567890">+44 1234 567 890</a></p>
+        </div>
+        <form class="contact-form reveal reveal-delay-2" id="contactForm">
+          <input type="text" placeholder="Your name" required/>
+          <input type="email" placeholder="Email address" required/>
+          <select>
+            <option value="">Interested in…</option>
+            <option>Student rooms</option>
+            <option>Phuket villa</option>
+            <option>General enquiry</option>
+          </select>
+          <textarea rows="4" placeholder="Your message"></textarea>
+          <button type="submit" class="btn-submit">Send message</button>
+          <p class="form-success" id="formSuccess"></p>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <p class="footer-logo">HomeHaven</p>
+      <nav class="footer-nav">
+        <a href="student.html">Student Rooms</a>
+        <a href="phuket.html">Phuket Villa</a>
+        <a href="#contact">Contact</a>
+        <a href="admin/">Admin</a>
+      </nav>
+      <p class="footer-legal">© 2025 HomeHaven Properties</p>
+    </div>
+  </footer>
+
+  <div class="property-modal" id="propModal">
+    <div class="modal-backdrop" id="modalBackdrop"></div>
+    <div class="modal-content"><button class="modal-close" id="modalClose">✕</button><div id="modalBody"></div></div>
+  </div>
+
+  <script src="js/properties.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>

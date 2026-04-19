@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Phuket Villa — HomeHaven</title>
+  <link rel="stylesheet" href="css/main.css"/>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <style>
+    body { background: var(--modern-bg); color: var(--modern-text); }
+
+    /* Override accent colours for holiday/phuket context */
+    body .btn-warm { background: var(--modern-accent); }
+    body .btn-warm:hover { background: var(--modern-accent-light); box-shadow: 0 8px 28px rgba(30,92,58,0.35); }
+    body .card-price { color: var(--modern-accent); }
+    body .section-title { color: var(--modern-dark); }
+    body .section-label { color: var(--modern-muted); }
+    body .filter-btn { border-color: var(--modern-line); color: var(--modern-muted); }
+
+    /* Nav overrides when scrolled */
+    .main-nav.scrolled .nav-logo { color: var(--modern-dark); }
+    .main-nav.scrolled .nav-link { color: var(--modern-muted); }
+    .main-nav.scrolled .nav-link.active { color: var(--modern-accent); }
+    .main-nav.scrolled .nav-toggle span { background: var(--modern-dark); }
+
+    /* HERO eyebrow style */
+    .phuket-eyebrow { font-size: clamp(0.68rem,1.2vw,0.78rem); letter-spacing: 0.3em; text-transform: uppercase; color: rgba(255,255,255,0.6); display: block; margin-bottom: 1.5rem; }
+
+    /* STATS BAR */
+    .stats-bar { background: var(--modern-dark); padding: clamp(2rem,4vw,3.5rem) 0; }
+    .stats-inner { display: flex; align-items: center; justify-content: center; }
+    .stat-blk { flex: 1; text-align: center; padding: 1rem clamp(1rem,3vw,2rem); }
+    .stat-big { display: block; font-family: 'Cormorant Garamond', serif; font-size: clamp(2.2rem,5vw,3rem); color: #fff; line-height: 1; }
+    .stat-unit { color: var(--modern-accent-light); }
+    .stat-sub { display: block; font-size: 0.74rem; letter-spacing: 0.16em; text-transform: uppercase; color: rgba(255,255,255,0.38); margin-top: 0.45rem; }
+    .stat-sep { width: 1px; height: 48px; background: rgba(255,255,255,0.1); }
+
+    /* PROPERTY SECTION */
+    .phuket-section { padding: var(--space-xl) 0; }
+    .phuket-section .property-card { border: 1px solid var(--modern-line); }
+
+    /* FEATURES STRIP */
+    .features-strip { padding: var(--space-xl) 0; background: #fff; border-top: 1px solid var(--modern-line); }
+    .features-strip .section-title { color: var(--modern-dark); }
+    .amenity-row { display: flex; justify-content: center; flex-wrap: wrap; gap: clamp(0.8rem,2vw,1.6rem); margin-top: 0.5rem; }
+    .amenity { text-align: center; padding: clamp(1.2rem,3vw,1.8rem) clamp(1.5rem,3vw,2.2rem); border: 1px solid var(--modern-line); border-radius: var(--radius); transition: border-color var(--tr), transform var(--tr); }
+    .amenity:hover { border-color: var(--modern-accent); transform: translateY(-4px); }
+    .amenity span { font-size: clamp(1.5rem,3vw,1.8rem); display: block; margin-bottom: 0.6rem; }
+    .amenity p { font-size: clamp(0.76rem,1.2vw,0.84rem); color: var(--modern-muted); }
+
+    /* FEATURE STRIP 3-COL */
+    .trip-strip { padding: var(--space-xl) 0; }
+    .trip-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%,240px),1fr)); gap: clamp(2rem,5vw,4rem); }
+    .trip-item .trip-num { font-size: 0.72rem; letter-spacing: 0.25em; color: var(--modern-accent-light); display: block; margin-bottom: 1rem; }
+    .trip-item h4 { font-family: 'Cormorant Garamond', serif; font-size: clamp(1.3rem,2.5vw,1.6rem); color: var(--modern-dark); margin-bottom: 0.7rem; }
+    .trip-item p { font-size: clamp(0.86rem,1.3vw,0.94rem); color: var(--modern-muted); line-height: 1.75; }
+
+    /* CTA BAND */
+    .cta-band { background: var(--modern-accent); padding: var(--space-xl) 0; text-align: center; }
+    .cta-band h2 { font-family: 'Cormorant Garamond', serif; font-size: clamp(2rem,5vw,3.2rem); color: #fff; margin-bottom: 0.8rem; }
+    .cta-band p { color: rgba(255,255,255,0.72); margin-bottom: 2.5rem; font-size: clamp(0.9rem,1.5vw,1rem); }
+    .cta-band .btn-cta { background: #fff; color: var(--modern-accent); padding: clamp(0.9rem,2vw,1.1rem) clamp(2rem,4vw,3rem); font-size: clamp(0.78rem,1.3vw,0.88rem); font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; border-radius: var(--radius); transition: all var(--tr); display: inline-block; }
+    .cta-band .btn-cta:hover { background: rgba(255,255,255,0.9); box-shadow: 0 8px 24px rgba(0,0,0,0.2); transform: translateY(-2px); }
+
+    .modern-footer { background: var(--modern-dark); }
+
+    /* Modal overrides for modern */
+    .phuket-modal .modal-price { color: var(--modern-accent); }
+    .phuket-modal .modal-features li::before { color: var(--modern-accent); }
+
+    /* Search bar */
+    .hero-search { max-width: 400px; margin: 0 auto; }
+    .hero-search input { width: 100%; padding: 0.95rem 1.5rem; border: none; border-radius: var(--radius); font-family: 'Jost',sans-serif; font-size: 0.9rem; font-weight: 300; background: rgba(255,255,255,0.94); color: var(--modern-dark); outline: none; }
+
+    @media(max-width:768px){ .stats-inner{flex-direction:column;gap:1.5rem;} .stat-sep{width:60px;height:1px;} }
+  </style>
+</head>
+<body>
+
+  <nav class="main-nav" id="mainNav">
+    <a href="index.html" class="nav-logo">HomeHaven</a>
+    <div class="nav-links">
+      <a href="student.html" class="nav-link">Student Rooms</a>
+      <a href="phuket.html" class="nav-link active">Phuket Villa</a>
+      <a href="index.html#contact" class="nav-link">Contact</a>
+    </div>
+    <button class="nav-toggle" id="navToggle"><span></span><span></span><span></span></button>
+  </nav>
+
+  <!-- TRUE PARALLAX HERO: ocean/beach image stays fixed, text scrolls over -->
+  <header class="parallax-hero phuket-hero">
+    <div class="hero-content">
+      <span class="phuket-eyebrow">— Phuket, Thailand —</span>
+      <h1 class="hero-title">A private villa<br/><em>in paradise</em></h1>
+      <p class="hero-sub">Steps from Kata Beach. Fully staffed. Yours to enjoy.</p>
+      <div class="hero-ctas">
+        <a href="#villa" class="btn btn-warm">See the Villa</a>
+        <a href="index.html#contact" class="btn btn-ghost">Enquire & Book</a>
+      </div>
+    </div>
+    <div class="scroll-hint"><span>Scroll</span><div class="scroll-hint-line"></div></div>
+  </header>
+
+  <!-- STATS -->
+  <div class="stats-bar">
+    <div class="container stats-inner">
+      <div class="stat-blk reveal"><span class="stat-big">5<span class="stat-unit">★</span></span><span class="stat-sub">Guest rating</span></div>
+      <div class="stat-sep"></div>
+      <div class="stat-blk reveal reveal-delay-1"><span class="stat-big">Flexible</span><span class="stat-sub">Check-in & out</span></div>
+      <div class="stat-sep"></div>
+      <div class="stat-blk reveal reveal-delay-2"><span class="stat-big">Direct</span><span class="stat-sub">No platform fees</span></div>
+    </div>
+  </div>
+
+  <!-- VILLA LISTING -->
+  <section class="phuket-section" id="villa">
+    <div class="container">
+      <div class="listings-header reveal">
+        <div>
+          <span class="section-label">Available to book</span>
+          <h2 class="section-title" style="margin-bottom:0">The Villa</h2>
+        </div>
+        <div class="filter-bar">
+          <button class="filter-btn modern-filter active" data-filter="all">All</button>
+          <button class="filter-btn modern-filter" data-filter="villa">Villa</button>
+          <button class="filter-btn modern-filter" data-filter="apartment">Apartment</button>
+        </div>
+      </div>
+      <div class="properties-grid" id="phuketGrid"></div>
+      <div class="no-properties" id="phuketEmpty" style="display:none">
+        <div class="empty-icon" style="font-size:3rem;margin-bottom:1rem">🌴</div>
+        <h3 style="font-family:'Cormorant Garamond',serif;font-size:1.8rem;color:var(--modern-dark);margin-bottom:0.4rem">Villa details coming soon</h3>
+        <p style="color:var(--modern-muted)">Contact us directly to enquire about availability.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- WHY BOOK DIRECT -->
+  <section class="trip-strip">
+    <div class="container">
+      <div class="reveal" style="text-align:center;margin-bottom:clamp(2.5rem,5vw,4rem)">
+        <span class="section-label">Why book with us</span>
+        <h2 class="section-title centered">Direct is better</h2>
+      </div>
+      <div class="trip-grid">
+        <div class="trip-item reveal reveal-delay-1">
+          <span class="trip-num">01</span>
+          <h4>No Platform Fees</h4>
+          <p>Book direct and pay no extra commissions. The best rates guaranteed.</p>
+        </div>
+        <div class="trip-item reveal reveal-delay-2">
+          <span class="trip-num">02</span>
+          <h4>Personal Service</h4>
+          <p>A real person answers your questions — not a chatbot. Before and during your stay.</p>
+        </div>
+        <div class="trip-item reveal reveal-delay-3">
+          <span class="trip-num">03</span>
+          <h4>Curated Property</h4>
+          <p>Personally vetted. Exactly as described. No surprises when you arrive.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PARALLAX OCEAN BAND -->
+  <div class="parallax-band phuket-band-parallax">
+    <div class="band-inner reveal">
+      <p class="band-quote">"Woke up to the sound of the ocean. Absolute paradise — we'll be back."</p>
+      <cite class="band-cite">— Previous guest, Phuket</cite>
+    </div>
+  </div>
+
+  <!-- AMENITIES -->
+  <section class="features-strip">
+    <div class="container">
+      <div class="reveal" style="text-align:center">
+        <span class="section-label">The villa includes</span>
+        <h2 class="section-title centered">Everything you need</h2>
+      </div>
+      <div class="amenity-row">
+        <div class="amenity reveal"><span>🏊</span><p>Private Pool</p></div>
+        <div class="amenity reveal reveal-delay-1"><span>📶</span><p>Fast WiFi</p></div>
+        <div class="amenity reveal reveal-delay-2"><span>🚗</span><p>Airport Transfer</p></div>
+        <div class="amenity reveal reveal-delay-3"><span>🍳</span><p>Full Kitchen</p></div>
+        <div class="amenity reveal reveal-delay-4"><span>🛁</span><p>Fresh Linen</p></div>
+        <div class="amenity reveal"><span>🔐</span><p>Keybox Entry</p></div>
+        <div class="amenity reveal reveal-delay-1"><span>❄️</span><p>Air Con</p></div>
+        <div class="amenity reveal reveal-delay-2"><span>🌴</span><p>Garden & Terrace</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="cta-band">
+    <div class="container reveal">
+      <h2>Ready to escape?</h2>
+      <p>Check availability and get a quote — we'll respond within 24 hours.</p>
+      <a href="index.html#contact" class="btn-cta">Enquire & Book →</a>
+    </div>
+  </section>
+
+  <footer class="site-footer modern-footer">
+    <div class="container footer-inner">
+      <p class="footer-logo">HomeHaven</p>
+      <nav class="footer-nav">
+        <a href="student.html">Student Rooms</a>
+        <a href="phuket.html">Phuket Villa</a>
+        <a href="index.html#contact">Contact</a>
+      </nav>
+      <p class="footer-legal">© 2025 HomeHaven Properties</p>
+    </div>
+  </footer>
+
+  <div class="property-modal" id="propModal">
+    <div class="modal-backdrop" id="modalBackdrop"></div>
+    <div class="modal-content phuket-modal"><button class="modal-close" id="modalClose">✕</button><div id="modalBody"></div></div>
+  </div>
+
+  <script src="js/properties.js"></script>
+  <script src="js/main.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      renderGrid('holiday', 'phuketGrid', 'phuketEmpty');
+      initFilters();
+    });
+  </script>
+</body>
+</html>

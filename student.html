@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Student Rooms — HomeHaven</title>
+  <link rel="stylesheet" href="css/main.css"/>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <style>
+    body { background: var(--warm-bg); color: var(--warm-text); }
+    /* Student-specific accent */
+    .included-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%,180px),1fr)); gap: clamp(1rem,2.5vw,1.8rem); margin-top: 2rem; }
+    .inc-card { background: #fff; border-radius: var(--radius-lg); padding: clamp(1.2rem,3vw,2rem); text-align: center; border: 1.5px solid var(--warm-mid); transition: border-color var(--tr), transform var(--tr); }
+    .inc-card:hover { border-color: var(--warm-accent); transform: translateY(-4px); }
+    .inc-icon { font-size: clamp(1.6rem,3vw,2rem); margin-bottom: 0.7rem; }
+    .inc-card h4 { font-family: 'Cormorant Garamond', serif; font-size: clamp(1.1rem,1.8vw,1.25rem); color: var(--warm-dark); margin-bottom: 0.4rem; }
+    .inc-card p { font-size: clamp(0.8rem,1.2vw,0.88rem); color: var(--warm-muted); }
+    .stat-strip { background: var(--warm-accent); padding: clamp(1.5rem,3vw,2.5rem) 0; }
+    .stat-strip-inner { display: flex; justify-content: center; align-items: center; flex-wrap: wrap; gap: 0; }
+    .stat-item { flex: 1; min-width: 140px; text-align: center; padding: 1rem; }
+    .stat-num { display: block; font-family: 'Cormorant Garamond', serif; font-size: clamp(2rem,4vw,2.6rem); color: #fff; }
+    .stat-label { display: block; font-size: 0.74rem; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(255,255,255,0.7); }
+    .stat-divider { width: 1px; height: 50px; background: rgba(255,255,255,0.25); }
+    .page-cta { padding: var(--space-lg) 0; background: #fff; }
+    .page-cta-inner { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 2rem; }
+    .page-cta h2 { font-family: 'Cormorant Garamond', serif; font-size: clamp(1.8rem,4vw,2.4rem); font-weight: 400; color: var(--warm-dark); }
+    .page-cta p { color: var(--warm-muted); font-size: 0.94rem; margin-top: 0.4rem; }
+    @media(max-width:768px){ .stat-strip-inner{flex-direction:column;} .stat-divider{width:60px;height:1px;} .page-cta-inner{flex-direction:column;} }
+  </style>
+</head>
+<body>
+
+  <nav class="main-nav" id="mainNav">
+    <a href="index.html" class="nav-logo">HomeHaven</a>
+    <div class="nav-links">
+      <a href="student.html" class="nav-link active">Student Rooms</a>
+      <a href="phuket.html" class="nav-link">Phuket Villa</a>
+      <a href="index.html#contact" class="nav-link">Contact</a>
+    </div>
+    <button class="nav-toggle" id="navToggle"><span></span><span></span><span></span></button>
+  </nav>
+
+  <!-- TRUE PARALLAX HERO -->
+  <header class="parallax-hero student-hero">
+    <div class="hero-content">
+      <span class="hero-eyebrow">Student Accommodation · Cambridge</span>
+      <h1 class="hero-title">Rooms that feel<br/><em>like home</em></h1>
+      <p class="hero-sub">Bills included. Fully furnished. Minutes from your college.</p>
+      <div class="hero-ctas">
+        <a href="#listings" class="btn btn-warm">View Available Rooms</a>
+        <a href="index.html#contact" class="btn btn-ghost">Enquire Now</a>
+      </div>
+    </div>
+    <div class="scroll-hint"><span>Scroll</span><div class="scroll-hint-line"></div></div>
+  </header>
+
+  <!-- STAT STRIP -->
+  <div class="stat-strip">
+    <div class="container">
+      <div class="stat-strip-inner">
+        <div class="stat-item reveal"><span class="stat-num">24hr</span><span class="stat-label">Response time</span></div>
+        <div class="stat-divider"></div>
+        <div class="stat-item reveal reveal-delay-1"><span class="stat-num">Bills</span><span class="stat-label">All included</span></div>
+        <div class="stat-divider"></div>
+        <div class="stat-item reveal reveal-delay-2"><span class="stat-num">£0</span><span class="stat-label">Hidden fees</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- LISTINGS -->
+  <section class="listings-section" id="listings">
+    <div class="container">
+      <div class="listings-header reveal">
+        <div>
+          <span class="section-label">Available now</span>
+          <h2 class="section-title" style="margin-bottom:0">Student Rooms</h2>
+        </div>
+        <div class="filter-bar">
+          <button class="filter-btn active" data-filter="all">All</button>
+          <button class="filter-btn" data-filter="ensuite">En-suite</button>
+          <button class="filter-btn" data-filter="shared">Shared Bath</button>
+          <button class="filter-btn" data-filter="studio">Studio</button>
+        </div>
+      </div>
+      <div class="properties-grid" id="studentGrid"></div>
+      <div class="no-properties" id="studentEmpty" style="display:none">
+        <div class="empty-icon">🏡</div>
+        <h3>No rooms listed yet</h3>
+        <p>Check back soon — new rooms added regularly.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- WHAT'S INCLUDED -->
+  <section style="padding: var(--space-xl) 0; background: #fff;">
+    <div class="container">
+      <div class="reveal" style="text-align:center">
+        <span class="section-label">Every room includes</span>
+        <h2 class="section-title centered">What you get</h2>
+      </div>
+      <div class="included-grid">
+        <div class="inc-card reveal reveal-delay-1"><div class="inc-icon">💡</div><h4>All Bills</h4><p>Gas, electricity, water and broadband included in rent.</p></div>
+        <div class="inc-card reveal reveal-delay-2"><div class="inc-icon">📶</div><h4>Fast Broadband</h4><p>Gigabit fibre — perfect for lectures and streaming.</p></div>
+        <div class="inc-card reveal reveal-delay-3"><div class="inc-icon">🛋️</div><h4>Fully Furnished</h4><p>Bed, desk, wardrobe — everything you need from day one.</p></div>
+        <div class="inc-card reveal reveal-delay-4"><div class="inc-icon">🔐</div><h4>Secure Entry</h4><p>Key fob or smart lock access on all properties.</p></div>
+        <div class="inc-card reveal"><div class="inc-icon">🧹</div><h4>Communal Cleaning</h4><p>Shared spaces cleaned regularly — it's sorted for you.</p></div>
+        <div class="inc-card reveal reveal-delay-1"><div class="inc-icon">🛠️</div><h4>Quick Maintenance</h4><p>Report issues via WhatsApp and we'll fix it fast.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PARALLAX QUOTE -->
+  <div class="parallax-band student-band-parallax">
+    <div class="band-inner reveal">
+      <p class="band-quote">"Genuinely the best student house I lived in. Always felt looked after."</p>
+      <cite class="band-cite">— Previous tenant, Cambridge</cite>
+    </div>
+  </div>
+
+  <!-- CTA -->
+  <section class="page-cta">
+    <div class="container page-cta-inner">
+      <div class="reveal">
+        <h2>Ready to find your room?</h2>
+        <p>Get in touch to arrange a viewing — we'll respond within 24 hours.</p>
+      </div>
+      <a href="index.html#contact" class="btn btn-warm btn-lg reveal reveal-delay-2">Enquire Now →</a>
+    </div>
+  </section>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <p class="footer-logo">HomeHaven</p>
+      <nav class="footer-nav">
+        <a href="student.html">Student Rooms</a>
+        <a href="phuket.html">Phuket Villa</a>
+        <a href="index.html#contact">Contact</a>
+      </nav>
+      <p class="footer-legal">© 2025 HomeHaven Properties</p>
+    </div>
+  </footer>
+
+  <div class="property-modal" id="propModal">
+    <div class="modal-backdrop" id="modalBackdrop"></div>
+    <div class="modal-content"><button class="modal-close" id="modalClose">✕</button><div id="modalBody"></div></div>
+  </div>
+
+  <script src="js/properties.js"></script>
+  <script src="js/main.js"></script>
+  <script>document.addEventListener('DOMContentLoaded',()=>{ renderGrid('student','studentGrid','studentEmpty'); initFilters(); });</script>
+</body>
+</html>

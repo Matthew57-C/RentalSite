@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Admin — HomeHaven</title>
+  <link rel="stylesheet" href="../css/admin.css"/>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600&family=Jost:wght@300;400;500&display=swap" rel="stylesheet"/>
+</head>
+<body class="admin-page">
+
+  <!-- LOGIN -->
+  <div class="admin-login" id="adminLogin">
+    <div class="login-card">
+      <div class="login-logo">HomeHaven <span>Admin</span></div>
+      <h2>Sign in</h2>
+      <p>Enter your admin password to manage properties.</p>
+      <div class="login-form">
+        <input type="password" id="pwInput" placeholder="Password" autocomplete="current-password"/>
+        <button class="btn-admin" id="loginBtn">Sign In</button>
+        <p class="login-error" id="loginError"></p>
+      </div>
+      <p class="login-hint">Default password: <code>admin123</code> — change it in Settings once logged in.</p>
+    </div>
+  </div>
+
+  <!-- DASHBOARD -->
+  <div class="admin-dashboard" id="adminDashboard" style="display:none">
+
+    <aside class="admin-sidebar">
+      <div class="sidebar-logo">HomeHaven <span>Admin Panel</span></div>
+      <nav class="sidebar-nav">
+        <button class="sidebar-btn active" data-panel="properties">🏠 Properties</button>
+        <button class="sidebar-btn" data-panel="add">➕ Add Property</button>
+        <button class="sidebar-btn" data-panel="settings">⚙️ Settings</button>
+      </nav>
+      <div class="sidebar-footer">
+        <button class="btn-logout" id="logoutBtn">Sign out</button>
+        <a href="../index.html" target="_blank" class="view-site-link">View site ↗</a>
+      </div>
+    </aside>
+
+    <main class="admin-main">
+
+      <!-- PROPERTIES -->
+      <div class="admin-panel active" id="panel-properties">
+        <div class="panel-header">
+          <h1>All Properties</h1>
+          <select class="admin-select" id="typeFilter">
+            <option value="all">All types</option>
+            <option value="student">Student</option>
+            <option value="holiday">Holiday / Phuket</option>
+          </select>
+        </div>
+        <div class="admin-list" id="adminList"></div>
+        <div class="admin-empty" id="adminEmpty">
+          <p>No properties yet. <button class="link-btn" data-panel="add">Add your first →</button></p>
+        </div>
+      </div>
+
+      <!-- ADD / EDIT -->
+      <div class="admin-panel" id="panel-add">
+        <div class="panel-header">
+          <h1 id="addTitle">Add Property</h1>
+        </div>
+        <div class="form-wrap">
+          <input type="hidden" id="editId"/>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label>Property Name *</label>
+              <input type="text" id="propName" placeholder="e.g. The Garden Room, Kata Beach Villa"/>
+            </div>
+            <div class="form-group">
+              <label>Type *</label>
+              <select id="propType">
+                <option value="student">Student Room</option>
+                <option value="holiday">Holiday / Phuket</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label>Location *</label>
+              <input type="text" id="propLocation" placeholder="e.g. Cambridge CB1 or Kata Beach, Phuket"/>
+            </div>
+            <div class="form-group">
+              <label>Price</label>
+              <input type="text" id="propPrice" placeholder="e.g. £650/mo or £250/night"/>
+            </div>
+          </div>
+
+          <div class="form-row three">
+            <div class="form-group">
+              <label>Bedrooms</label>
+              <input type="number" id="propBeds" min="1" value="1"/>
+            </div>
+            <div class="form-group">
+              <label>Bathrooms</label>
+              <input type="number" id="propBaths" min="1" value="1"/>
+            </div>
+            <div class="form-group">
+              <label>Tag / Filter keyword</label>
+              <input type="text" id="propTag" placeholder="e.g. ensuite, villa, studio"/>
+            </div>
+          </div>
+
+          <div class="form-group" style="margin-bottom:1.4rem">
+            <label>Description *</label>
+            <textarea id="propDesc" rows="4" placeholder="Describe the property — location, feel, key details…"></textarea>
+          </div>
+
+          <div class="form-group" style="margin-bottom:1.4rem">
+            <label>Key Features (one per line)</label>
+            <textarea id="propFeatures" rows="5" placeholder="Bills included&#10;En-suite bathroom&#10;5 min walk to centre&#10;Private pool"></textarea>
+          </div>
+
+          <!-- PHOTOS -->
+          <div class="form-group" style="margin-bottom:1.4rem">
+            <label>Photos</label>
+            <div class="photo-zone" id="photoZone">
+              <input type="file" id="photoInput" accept="image/*" multiple style="display:none"/>
+              <div class="upload-prompt" id="uploadPrompt">
+                <span class="upload-icon">📷</span>
+                <p>Click to upload or drag & drop photos</p>
+                <p class="upload-hint">JPG, PNG, WebP — multiple files supported</p>
+                <button type="button" class="btn-upload-trigger" id="uploadTrigger">Choose Photos</button>
+              </div>
+              <div class="photo-previews" id="photoPreviews"></div>
+            </div>
+            <p class="photo-note">Photos are stored in your browser. Use a cloud host (Cloudinary/ImgBB) for a live website.</p>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label>Status</label>
+              <select id="propStatus">
+                <option value="available">Available</option>
+                <option value="let">Let / Booked</option>
+                <option value="unavailable">Unavailable</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Featured on homepage?</label>
+              <select id="propFeatured">
+                <option value="true">Yes</option>
+                <option value="false">No</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-actions">
+            <button class="btn-admin btn-save" id="saveBtn">Save Property</button>
+            <button class="btn-cancel" id="cancelBtn" style="display:none">Cancel Edit</button>
+          </div>
+          <p class="save-msg" id="saveMsg"></p>
+        </div>
+      </div>
+
+      <!-- SETTINGS -->
+      <div class="admin-panel" id="panel-settings">
+        <div class="panel-header"><h1>Settings</h1></div>
+        <div class="settings-wrap">
+
+          <div class="settings-card">
+            <h3>Change Password</h3>
+            <div class="form-group" style="margin-bottom:1rem">
+              <label>New Password</label>
+              <input type="password" id="newPw" placeholder="Enter new password"/>
+            </div>
+            <div class="form-group" style="margin-bottom:1.2rem">
+              <label>Confirm Password</label>
+              <input type="password" id="confirmPw" placeholder="Confirm new password"/>
+            </div>
+            <button class="btn-admin" id="changePwBtn" style="width:auto;padding:0.75rem 2rem">Update Password</button>
+            <p class="save-msg" id="pwMsg" style="margin-top:0.7rem"></p>
+          </div>
+
+          <div class="settings-card">
+            <h3>Data Management</h3>
+            <p>Export all your property data as a JSON file, or clear everything to start fresh.</p>
+            <div class="settings-actions">
+              <button class="btn-outline" id="exportBtn">Export Data</button>
+              <button class="btn-danger" id="clearBtn">Clear All Data</button>
+            </div>
+          </div>
+
+          <div class="settings-card">
+            <h3>Site Info</h3>
+            <div class="form-group" style="margin-bottom:1rem">
+              <label>Site Name</label>
+              <input type="text" id="siteName" placeholder="HomeHaven Properties"/>
+            </div>
+            <div class="form-group" style="margin-bottom:1.2rem">
+              <label>Contact Email</label>
+              <input type="email" id="siteEmail" placeholder="hello@yourdomain.co.uk"/>
+            </div>
+            <button class="btn-admin" id="saveSiteBtn" style="width:auto;padding:0.75rem 2rem">Save</button>
+            <p class="save-msg" id="siteMsg" style="margin-top:0.7rem"></p>
+          </div>
+
+        </div>
+      </div>
+
+    </main>
+  </div>
+
+  <script src="../js/properties.js"></script>
+  <script src="../js/admin.js"></script>
+</body>
+</html>
