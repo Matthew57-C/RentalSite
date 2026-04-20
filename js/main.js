@@ -184,11 +184,39 @@ window.liveSearch = function(query, gridId) {
 
 // CONTACT FORM
 const cform = document.getElementById('contactForm');
-cform?.addEventListener('submit', e => {
+cform?.addEventListener('submit', async e => {
   e.preventDefault();
   const note = document.getElementById('formSuccess');
-  if (note) { note.textContent = '✓ Message sent! We\'ll be in touch within 24 hours.'; }
-  cform.reset();
+  const btn  = cform.querySelector('[type="submit"]');
+  if (btn) btn.disabled = true;
+  if (note) { note.style.color = ''; note.textContent = 'Sending…'; }
+
+  const fd = new FormData(cform);
+  try {
+    const res = await fetch('https://formsubmit.co/ajax/suziezhu7717@gmail.com', {
+      method: 'POST',
+      headers: { 'Accept': 'application/json' },
+      body: JSON.stringify({
+        name:    fd.get('name'),
+        email:   fd.get('email'),
+        interest: fd.get('interest') || '',
+        message: fd.get('message') || '',
+        _subject: 'New enquiry — HomeHaven',
+        _captcha: 'false'
+      })
+    });
+    const data = await res.json();
+    if (data.success === 'true' || data.success === true) {
+      if (note) { note.style.color = 'var(--warm-accent)'; note.textContent = '✓ Message sent! We\'ll be in touch within 24 hours.'; }
+      cform.reset();
+    } else {
+      throw new Error();
+    }
+  } catch {
+    if (note) { note.style.color = '#c0392b'; note.textContent = 'Something went wrong — please email us directly.'; }
+  } finally {
+    if (btn) btn.disabled = false;
+  }
 });
 
 // hidden card style

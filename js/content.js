@@ -8,8 +8,8 @@ const CONTENT_DEFAULTS = {
   stat2Num: 98, stat2Label: 'Tenant satisfaction',
   stat3Num: 10, stat3Label: 'Years experience',
   stat4Num: 24, stat4Label: 'Response time',
-  email: 'hello@homehaven.co.uk',
-  phone: '+44 1234 567 890',
+  email: 'suziezhu7717@gmail.com',
+  phone: '07762219808',
   quotes: [
     { text: '\u201cThe best accommodation I\u2019ve ever rented. It genuinely felt like home.\u201d', cite: '\u2014 Previous tenant, Cambridge' }
   ],
