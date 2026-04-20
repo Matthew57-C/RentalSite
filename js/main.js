@@ -1,44 +1,30 @@
-/* main.js v3 — Nav, Parallax, Reveal, Modal, Filters, Contact */
+/* main.js v4 — Nav, Layered Parallax, Reveal, Modal, Filters, Contact */
 
-// HOME HERO ADVANCED PARALLAX
+// LAYERED PARALLAX HERO
 (function () {
-  const hero = document.querySelector('.home-hero');
+  const hero = document.getElementById('paraHero');
   if (!hero) return;
-  const heroContent = hero.querySelector('.hero-content');
-  const decos = hero.querySelectorAll('[data-depth]');
-  const lerp = (a, b, t) => a + (b - a) * t;
-  let mx = 0, my = 0, cx = 0, cy = 0, sy = 0, tick = 0;
+  const bg   = hero.querySelector('.para-bg');
+  const mid  = hero.querySelector('.para-mid');
+  const fg   = hero.querySelector('.para-fg');
+  const cont = hero.querySelector('.para-content');
+  const hint = hero.querySelector('.para-scroll');
 
-  window.addEventListener('scroll', () => { sy = window.scrollY; }, { passive: true });
-  document.addEventListener('mousemove', e => {
-    mx = (e.clientX / window.innerWidth - 0.5) * -22;
-    my = (e.clientY / window.innerHeight - 0.5) * -14;
-  });
-
-  (function raf() {
-    tick++;
-    cx = lerp(cx, mx, 0.055);
-    cy = lerp(cy, my, 0.055);
-    const ty = Math.min(sy * 0.28, 90);
-
-    hero.style.setProperty('--hero-tx', `${cx}px`);
-    hero.style.setProperty('--hero-ty', `${cy + ty}px`);
-
-    if (heroContent) {
-      const ratio = Math.min(sy / (window.innerHeight * 0.55), 1);
-      heroContent.style.opacity = Math.max(1 - ratio * 1.1, 0);
-      heroContent.style.transform = `translateY(${ratio * -35}px)`;
+  function update() {
+    const sy = window.scrollY;
+    const vh = window.innerHeight;
+    if (sy > vh * 1.1) return;
+    if (bg)  bg.style.transform  = `translateY(${-sy * 0.08}px)`;
+    if (mid) mid.style.transform = `translateY(${-sy * 0.28}px)`;
+    if (fg)  fg.style.transform  = `translateY(${-sy * 0.52}px)`;
+    if (cont) {
+      const p = Math.min(sy / (vh * 0.45), 1);
+      cont.style.transform = `translateY(${-sy * 0.18}px)`;
+      cont.style.opacity   = String(Math.max(1 - p * 1.4, 0));
     }
-
-    decos.forEach((el, i) => {
-      const d = parseFloat(el.dataset.depth) || 0.3;
-      const fy = Math.sin((tick + i * 90) * 0.007) * 18;
-      const fx = Math.cos((tick + i * 60) * 0.004) * 8;
-      el.style.transform = `translate(calc(${cx * d}px + ${fx}px), calc(${cy * d}px + ${fy}px))`;
-    });
-
-    requestAnimationFrame(raf);
-  })();
+    if (hint) hint.style.opacity = String(Math.max(1 - sy / 130, 0));
+  }
+  window.addEventListener('scroll', update, { passive: true });
 })();
 
 // SPLIT PANEL VISIBILITY — hide panels with no properties
@@ -83,8 +69,9 @@ const nav = document.getElementById('mainNav');
 const toggle = document.getElementById('navToggle');
 const links = document.querySelector('.nav-links');
 
+const _navThreshold = document.getElementById('paraHero') ? window.innerHeight * 0.85 : 50;
 window.addEventListener('scroll', () => {
-  nav?.classList.toggle('scrolled', window.scrollY > 50);
+  nav?.classList.toggle('scrolled', window.scrollY > _navThreshold);
 }, { passive: true });
 
 toggle?.addEventListener('click', () => {

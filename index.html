@@ -19,26 +19,34 @@
     <button class="nav-toggle" id="navToggle" aria-label="Menu"><span></span><span></span><span></span></button>
   </nav>
 
-  <!-- TRUE PARALLAX HERO: background is fixed, content scrolls over it -->
-  <section class="parallax-hero home-hero">
-    <div class="hero-deco" aria-hidden="true">
-      <span class="deco-line dl-1" data-depth="0.25"></span>
-      <span class="deco-line dl-2" data-depth="0.4"></span>
-      <span class="deco-line dl-3" data-depth="0.15"></span>
-      <span class="deco-orb do-1" data-depth="0.2"></span>
-      <span class="deco-orb do-2" data-depth="0.35"></span>
+  <!-- LAYERED PARALLAX HERO (position:fixed, behind page) -->
+  <div class="para-hero" id="paraHero">
+    <div class="para-layer para-sky" aria-hidden="true"></div>
+    <div class="para-layer para-bg" aria-hidden="true"></div>
+    <div class="para-layer para-mid" aria-hidden="true">
+      <svg viewBox="0 0 1440 400" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M-10,310 C60,280 130,250 220,200 C310,150 380,180 470,160 C560,140 640,120 730,145 C820,170 900,190 990,165 C1080,140 1160,115 1260,140 C1340,160 1400,175 1450,155 L1450,400 L-10,400 Z" fill="#1b2e1e"/>
+      </svg>
     </div>
-    <div class="hero-content">
-      <p class="hero-eyebrow">Properties to feel at home in</p>
-      <h1 class="hero-title">Find your<br/><em>perfect space</em></h1>
-      <p class="hero-sub">Student rooms near Cambridge's colleges. A luxury villa in Phuket.</p>
-      <div class="hero-ctas">
-        <a href="student.html" class="btn btn-warm">Student Rooms</a>
-        <a href="phuket.html" class="btn btn-ghost">Phuket Villa</a>
-      </div>
+    <div class="para-layer para-fg" aria-hidden="true">
+      <svg viewBox="0 0 1440 400" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M-10,360 C70,330 160,345 280,315 C400,285 490,310 610,295 C730,280 820,260 940,275 C1060,290 1180,315 1300,298 C1390,285 1435,305 1450,295 L1450,400 L-10,400 Z" fill="#0d150e"/>
+      </svg>
     </div>
-    <div class="scroll-hint"><span>Scroll</span><div class="scroll-hint-line"></div></div>
-  </section>
+    <div class="para-vignette" aria-hidden="true"></div>
+    <div class="para-content">
+      <p class="para-eyebrow">Student Rooms &nbsp;&middot;&nbsp; Phuket Villa</p>
+      <h1 class="para-wordmark">HomeHaven</h1>
+    </div>
+    <div class="para-scroll" aria-hidden="true">
+      <span>Scroll</span>
+      <div class="para-scroll-bar"></div>
+    </div>
+  </div>
+  <!-- SPACER: reserves scroll distance for the fixed hero -->
+  <div class="para-spacer"></div>
+  <!-- PAGE BODY: slides over the hero as you scroll -->
+  <div class="page-body">
 
   <!-- STATS STRIP -->
   <div class="stats-strip">
@@ -166,6 +174,8 @@
       <p class="footer-legal">© 2025 HomeHaven Properties</p>
     </div>
   </footer>
+
+  </div><!-- /page-body -->
 
   <div class="property-modal" id="propModal">
     <div class="modal-backdrop" id="modalBackdrop"></div>

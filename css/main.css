@@ -148,36 +148,100 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
   to   { opacity: 1; transform: translateY(0); }
 }
 
-/* Homepage hero — JS drives parallax via CSS vars */
-.home-hero::before {
-  background-image: url('https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=2000&q=85');
-  background-position: center 40%;
-  background-attachment: scroll;
-  transform: translate(var(--hero-tx, 0px), var(--hero-ty, 0px)) scale(1.14);
-  transition: none;
-  will-change: transform;
-}
-.home-hero::after {
-  background: linear-gradient(to bottom, rgba(10,14,8,0.28) 0%, rgba(10,14,8,0.08) 40%, rgba(10,14,8,0.75) 100%);
+/* =============================================
+   LAYERED PARALLAX HERO
+   ============================================= */
+.para-hero {
+  position: fixed; top: 0; left: 0; right: 0;
+  height: 100svh; min-height: 620px;
+  overflow: hidden; z-index: 0;
+  background: #080d07;
 }
 
-/* Hero deco floating elements */
-.hero-deco { position: absolute; inset: 0; z-index: 1; pointer-events: none; overflow: hidden; }
-.deco-line {
-  position: absolute; width: 1px;
-  background: linear-gradient(to bottom, transparent, rgba(255,255,255,0.22), transparent);
-  will-change: transform;
+.para-layer { position: absolute; will-change: transform; }
+
+.para-sky {
+  inset: 0; z-index: 0;
+  background: linear-gradient(175deg, #0c1a10 0%, #16261b 40%, #0e1c12 70%, #0a1009 100%);
 }
-.deco-orb {
-  position: absolute; border-radius: 50%;
-  border: 1px solid rgba(255,255,255,0.1);
-  will-change: transform;
+
+.para-bg {
+  inset: 0; z-index: 1;
+  background-image: url('https://images.unsplash.com/photo-1469474968028-56623f02e42e?w=2000&q=85');
+  background-size: cover; background-position: center 35%;
+  opacity: 0.42;
 }
-.dl-1 { height: clamp(80px,14vh,130px); left: 18%; top: 20%; }
-.dl-2 { height: clamp(50px,9vh,90px); right: 23%; bottom: 30%; }
-.dl-3 { height: clamp(35px,7vh,65px); left: 52%; top: 62%; opacity: 0.5; }
-.do-1 { width: 80px; height: 80px; right: 16%; top: 24%; }
-.do-2 { width: 38px; height: 38px; left: 27%; bottom: 27%; opacity: 0.55; }
+
+.para-mid {
+  position: absolute;
+  bottom: 0; left: -2px; right: -2px;
+  height: 58%; z-index: 2;
+}
+.para-mid svg, .para-fg svg {
+  position: absolute; bottom: 0; left: 0; width: 100%; height: 100%;
+}
+
+.para-fg {
+  position: absolute;
+  bottom: 0; left: -2px; right: -2px;
+  height: 44%; z-index: 3;
+}
+
+.para-vignette {
+  position: absolute; inset: 0; z-index: 4; pointer-events: none;
+  background:
+    radial-gradient(ellipse at 50% 100%, transparent 30%, rgba(8,13,7,0.55) 100%),
+    linear-gradient(to bottom, rgba(8,13,7,0.2) 0%, transparent 22%, transparent 58%, rgba(8,13,7,0.88) 100%);
+}
+
+.para-content {
+  position: absolute; inset: 0; z-index: 5;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  color: #fff; text-align: center;
+  padding: 0 clamp(1rem, 5vw, 3rem);
+  will-change: transform, opacity;
+  animation: paraIn 1.8s cubic-bezier(0.22,1,0.36,1) both;
+}
+@keyframes paraIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+.para-eyebrow {
+  font-family: 'Jost', sans-serif;
+  font-size: clamp(0.6rem, 0.9vw, 0.75rem);
+  font-weight: 400; letter-spacing: 0.3em; text-transform: uppercase;
+  color: rgba(255,255,255,0.45); margin-bottom: 1.4rem;
+}
+
+.para-wordmark {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(4.5rem, 11vw, 10rem);
+  font-weight: 300; letter-spacing: 0.06em; line-height: 1;
+  color: #fff;
+}
+
+.para-scroll {
+  position: absolute; bottom: 2.5rem; left: 50%; transform: translateX(-50%);
+  z-index: 6;
+  display: flex; flex-direction: column; align-items: center; gap: 0.6rem;
+  color: rgba(255,255,255,0.38);
+  font-family: 'Jost', sans-serif;
+  font-size: 0.6rem; letter-spacing: 0.22em; text-transform: uppercase;
+  animation: paraScrollBounce 2.5s ease-in-out infinite;
+}
+.para-scroll-bar {
+  width: 1px; height: 42px;
+  background: linear-gradient(to bottom, rgba(255,255,255,0.4), transparent);
+}
+@keyframes paraScrollBounce {
+  0%, 100% { opacity: 0.38; transform: translateX(-50%) translateY(0); }
+  50%       { opacity: 0.7;  transform: translateX(-50%) translateY(8px); }
+}
+
+.para-spacer { height: 100svh; pointer-events: none; }
+.page-body   { position: relative; z-index: 1; }
 
 /* Student hero */
 .student-hero::before {
