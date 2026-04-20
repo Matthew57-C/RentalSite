@@ -32,6 +32,7 @@
       <nav class="sidebar-nav">
         <button class="sidebar-btn active" data-panel="properties">🏠 Properties</button>
         <button class="sidebar-btn" data-panel="add">➕ Add Property</button>
+        <button class="sidebar-btn" data-panel="content">✏️ Site Content</button>
         <button class="sidebar-btn" data-panel="settings">⚙️ Settings</button>
       </nav>
       <div class="sidebar-footer">
@@ -158,6 +159,41 @@
         </div>
       </div>
 
+      <!-- CONTENT -->
+      <div class="admin-panel" id="panel-content">
+        <div class="panel-header"><h1>Site Content</h1></div>
+        <div class="settings-wrap">
+
+          <div class="settings-card">
+            <h3>Stats Strip</h3>
+            <p style="color:var(--muted);font-size:0.85rem;margin-bottom:1.5rem">The four figures shown on the homepage below the hero image.</p>
+            <div class="form-row"><div class="form-group"><label>Stat 1 — Number</label><input type="number" id="cStat1Num"/></div><div class="form-group"><label>Stat 1 — Label</label><input type="text" id="cStat1Label"/></div></div>
+            <div class="form-row"><div class="form-group"><label>Stat 2 — Number</label><input type="number" id="cStat2Num"/></div><div class="form-group"><label>Stat 2 — Label</label><input type="text" id="cStat2Label"/></div></div>
+            <div class="form-row"><div class="form-group"><label>Stat 3 — Number</label><input type="number" id="cStat3Num"/></div><div class="form-group"><label>Stat 3 — Label</label><input type="text" id="cStat3Label"/></div></div>
+            <div class="form-row"><div class="form-group"><label>Stat 4 — Number</label><input type="number" id="cStat4Num"/></div><div class="form-group"><label>Stat 4 — Label</label><input type="text" id="cStat4Label"/></div></div>
+            <button class="btn-admin" id="saveStatsBtn" style="width:auto;padding:0.75rem 2rem;margin-top:0.5rem">Save Stats</button>
+            <p class="save-msg" id="statsMsg" style="margin-top:0.7rem"></p>
+          </div>
+
+          <div class="settings-card">
+            <h3>Contact Details</h3>
+            <div class="form-group" style="margin-bottom:1rem"><label>Email</label><input type="email" id="cEmail"/></div>
+            <div class="form-group" style="margin-bottom:1.2rem"><label>Phone</label><input type="text" id="cPhone"/></div>
+            <button class="btn-admin" id="saveContactBtn" style="width:auto;padding:0.75rem 2rem">Save Contact</button>
+            <p class="save-msg" id="contactMsg" style="margin-top:0.7rem"></p>
+          </div>
+
+          <div class="settings-card">
+            <h3>Testimonial Quote</h3>
+            <div class="form-group" style="margin-bottom:1rem"><label>Quote</label><textarea id="cQuote" rows="3"></textarea></div>
+            <div class="form-group" style="margin-bottom:1.2rem"><label>Attribution</label><input type="text" id="cCite"/></div>
+            <button class="btn-admin" id="saveQuoteBtn" style="width:auto;padding:0.75rem 2rem">Save Quote</button>
+            <p class="save-msg" id="quoteMsg" style="margin-top:0.7rem"></p>
+          </div>
+
+        </div>
+      </div>
+
       <!-- SETTINGS -->
       <div class="admin-panel" id="panel-settings">
         <div class="panel-header"><h1>Settings</h1></div>
@@ -207,6 +243,7 @@
   </div>
 
   <script src="../js/properties.js"></script>
+  <script src="../js/content.js"></script>
   <script src="../js/admin.js"></script>
 </body>
 </html>

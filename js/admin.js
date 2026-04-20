@@ -34,6 +34,7 @@ function switchPanel(name) {
   document.querySelectorAll('.admin-panel').forEach(p => p.classList.toggle('active', p.id === `panel-${name}`));
   if (name === 'properties') loadList();
   if (name === 'add') { clearForm(); document.getElementById('addTitle').textContent = 'Add Property'; document.getElementById('cancelBtn').style.display = 'none'; }
+  if (name === 'content') loadContentPanel();
 }
 
 // PROPERTIES LIST
@@ -199,6 +200,47 @@ document.getElementById('saveSiteBtn').addEventListener('click', () => {
   localStorage.setItem(SITE_KEY, JSON.stringify({ name: document.getElementById('siteName').value.trim(), email: document.getElementById('siteEmail').value.trim() }));
   const m = document.getElementById('siteMsg'); m.textContent = '✓ Saved.'; m.className = 'save-msg';
   setTimeout(() => { m.textContent = ''; }, 3000);
+});
+
+// CONTENT PANEL
+function loadContentPanel() {
+  const c = getContent();
+  const set = (id, v) => { const el = document.getElementById(id); if (el) el.value = v ?? ''; };
+  for (let i = 1; i <= 4; i++) {
+    set(`cStat${i}Num`, c[`stat${i}Num`]);
+    set(`cStat${i}Label`, c[`stat${i}Label`]);
+  }
+  set('cEmail', c.email);
+  set('cPhone', c.phone);
+  set('cQuote', c.quote);
+  set('cCite', c.cite);
+}
+
+function contentMsg(id, text, err) {
+  const el = document.getElementById(id);
+  if (!el) return;
+  el.textContent = text; el.className = `save-msg${err ? ' err' : ''}`;
+  if (!err) setTimeout(() => { el.textContent = ''; }, 3000);
+}
+
+document.getElementById('saveStatsBtn')?.addEventListener('click', () => {
+  const patch = {};
+  for (let i = 1; i <= 4; i++) {
+    patch[`stat${i}Num`] = +document.getElementById(`cStat${i}Num`).value || 0;
+    patch[`stat${i}Label`] = document.getElementById(`cStat${i}Label`).value.trim();
+  }
+  saveContent(patch);
+  contentMsg('statsMsg', '✓ Stats saved!', false);
+});
+
+document.getElementById('saveContactBtn')?.addEventListener('click', () => {
+  saveContent({ email: document.getElementById('cEmail').value.trim(), phone: document.getElementById('cPhone').value.trim() });
+  contentMsg('contactMsg', '✓ Contact saved!', false);
+});
+
+document.getElementById('saveQuoteBtn')?.addEventListener('click', () => {
+  saveContent({ quote: document.getElementById('cQuote').value.trim(), cite: document.getElementById('cCite').value.trim() });
+  contentMsg('quoteMsg', '✓ Quote saved!', false);
 });
 
 checkAuth();
