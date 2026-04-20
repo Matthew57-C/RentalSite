@@ -169,7 +169,7 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
 
 /* Phuket hero */
 .phuket-hero::before {
-  background-image: url('https://images.unsplash.com/photo-1552465011-b4e21bf6e79a?w=1800&q=80');
+  background-image: url('https://res.cloudinary.com/dgioaobur/image/upload/v1776643227/133832516269375122_l5unwt.jpg');
   background-position: center 55%;
 }
 .phuket-hero::after {
