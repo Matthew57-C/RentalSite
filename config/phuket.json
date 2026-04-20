@@ -1,0 +1,103 @@
+{
+  "hero": {
+    "eyebrow": "— Kata Noi · Phuket, Thailand —",
+    "titleLine1": "The Heights",
+    "titleLine2": "Villa",
+    "subtitle": "A private four-bedroom retreat above the Andaman Sea."
+  },
+
+  "stats": [
+    { "big": "5", "unit": "★", "sub": "Guest rating" },
+    { "big": "4", "unit": "",  "sub": "Night minimum" },
+    { "big": "Direct", "unit": "", "sub": "No platform fees" },
+    { "big": "24", "unit": "h", "sub": "Response time" }
+  ],
+
+  "villa": {
+    "locationTag": "Kata Noi · Phuket, Thailand",
+    "title": "The Heights Villa",
+    "quickfacts": [
+      "4 bedrooms",
+      "3 bathrooms",
+      "Up to 8 guests",
+      "5 min to Kata Beach"
+    ],
+    "description": "Perched above the emerald waters of Kata Noi, The Heights Villa offers four elegantly appointed bedrooms, a private infinity pool and sweeping panoramic views across the Andaman Sea. Fully furnished and beautifully maintained, it is the ideal base for exploring Phuket's southern coastline — whether you're here for a long weekend or an extended escape. Book direct for the best rate and a personal welcome.",
+    "featuresLabel": "What's included",
+    "features": [
+      "Private infinity pool with ocean views",
+      "Fully equipped modern kitchen",
+      "Airport transfer on arrival",
+      "Daily housekeeping service",
+      "Air conditioning throughout",
+      "High-speed fibre WiFi",
+      "Outdoor dining terrace",
+      "Smart TV & streaming",
+      "Towels, linen & toiletries",
+      "Dedicated host contact 24/7"
+    ]
+  },
+
+  "booking": {
+    "price": "£380",
+    "priceUnit": "/ night",
+    "minNightsNote": "4-night minimum · Direct booking, no fees",
+    "ctaText": "Enquire & Book →",
+    "rating": "5.0",
+    "reviewCount": "47 stays",
+    "badges": [
+      "Best rate guaranteed direct",
+      "No booking platform fees",
+      "Flexible cancellation available",
+      "Personal host response within 24h"
+    ]
+  },
+
+  "whyDirect": {
+    "sectionLabel": "Why book with us",
+    "heading": "Direct is better",
+    "items": [
+      {
+        "num": "01",
+        "heading": "No Platform Fees",
+        "text": "Skip Airbnb and Booking.com. Book direct and pay only for your stay — nothing extra."
+      },
+      {
+        "num": "02",
+        "heading": "Personal Service",
+        "text": "A real person answers every question before and during your stay. No bots, no wait queues."
+      },
+      {
+        "num": "03",
+        "heading": "Exactly As Described",
+        "text": "Personally managed and consistently maintained. What you see is precisely what you get."
+      }
+    ]
+  },
+
+  "quote": {
+    "text": "Woke up to the sound of the ocean every morning. Absolute paradise — we'll be back.",
+    "cite": "— Previous guest, Kata Noi"
+  },
+
+  "amenities": {
+    "sectionLabel": "The villa includes",
+    "heading": "Everything you need",
+    "items": [
+      "Private Pool",
+      "Fast WiFi",
+      "Airport Transfer",
+      "Full Kitchen",
+      "Daily Housekeeping",
+      "Linen & Towels",
+      "Secure Entry",
+      "Air Conditioning"
+    ]
+  },
+
+  "cta": {
+    "heading": "Ready to escape?",
+    "text": "Check availability and get a personalised quote — we respond within 24 hours.",
+    "buttonText": "Enquire & Book →"
+  }
+}

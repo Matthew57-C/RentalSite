@@ -489,6 +489,87 @@
   <script src="js/properties.js"></script>
   <script src="js/main.js"></script>
   <script>
+  // ── CONFIG LOADER ─────────────────────────────────────────────────────────
+  // Reads config/phuket.json and populates the page. Edit that file to change
+  // any text, prices, stats or copy without touching this HTML.
+  fetch('config/phuket.json').then(r => r.json()).then(cfg => {
+    const set = (sel, val) => { const el = document.querySelector(sel); if (el) el.textContent = val; };
+
+    // Hero
+    set('.phuket-eyebrow', cfg.hero.eyebrow);
+    set('.hero-sub', cfg.hero.subtitle);
+    const ht = document.querySelector('.hero-title');
+    if (ht) ht.innerHTML = cfg.hero.titleLine1 + '<br/><em>' + cfg.hero.titleLine2 + '</em>';
+
+    // Stats bar
+    document.querySelectorAll('.stat-blk').forEach((blk, i) => {
+      const s = cfg.stats[i]; if (!s) return;
+      blk.querySelector('.stat-big').innerHTML = s.big + (s.unit ? '<span class="stat-unit">' + s.unit + '</span>' : '');
+      blk.querySelector('.stat-sub').textContent = s.sub;
+    });
+
+    // Villa info
+    set('.villa-location-tag', cfg.villa.locationTag);
+    set('.villa-title', cfg.villa.title);
+    set('.villa-desc', cfg.villa.description);
+    set('.villa-feat-label', cfg.villa.featuresLabel);
+    const featList = document.querySelector('.villa-features');
+    if (featList) featList.innerHTML = cfg.villa.features.map(f => '<li>' + f + '</li>').join('');
+
+    // Quickfacts — update text, preserve SVG icons
+    document.querySelectorAll('.villa-qf').forEach((el, i) => {
+      const text = cfg.villa.quickfacts[i]; if (!text) return;
+      const svg = el.querySelector('svg');
+      el.textContent = text;
+      if (svg) el.prepend(svg);
+    });
+
+    // Booking card
+    set('.booking-amount', cfg.booking.price);
+    set('.booking-unit', cfg.booking.priceUnit);
+    set('.booking-minnights', cfg.booking.minNightsNote);
+    set('.booking-cta', cfg.booking.ctaText);
+    set('.booking-star-text', cfg.booking.rating + ' · ' + cfg.booking.reviewCount);
+    const card = document.querySelector('.villa-booking-card');
+    if (card) {
+      card.querySelectorAll('.booking-badge').forEach(b => b.remove());
+      cfg.booking.badges.forEach(text => {
+        const d = document.createElement('div');
+        d.className = 'booking-badge'; d.textContent = text;
+        card.appendChild(d);
+      });
+    }
+
+    // Why book direct
+    set('.trip-strip .section-label', cfg.whyDirect.sectionLabel);
+    const wdHead = document.querySelector('.trip-strip .section-title');
+    if (wdHead) wdHead.innerHTML = cfg.whyDirect.heading.replace(' better', ' <em>better</em>');
+    document.querySelectorAll('.trip-item').forEach((el, i) => {
+      const item = cfg.whyDirect.items[i]; if (!item) return;
+      el.querySelector('.trip-num').textContent = item.num;
+      el.querySelector('h4').textContent = item.heading;
+      el.querySelector('p').textContent = item.text;
+    });
+
+    // Quote band
+    const bq = document.querySelector('.band-quote');
+    if (bq) bq.textContent = '\u201c' + cfg.quote.text + '\u201d';
+    set('.band-cite', cfg.quote.cite);
+
+    // Amenities
+    set('.amenities-section .section-label', cfg.amenities.sectionLabel);
+    set('.amenities-section .section-title', cfg.amenities.heading);
+    document.querySelectorAll('.amenity-item p').forEach((el, i) => {
+      if (cfg.amenities.items[i]) el.textContent = cfg.amenities.items[i];
+    });
+
+    // CTA band
+    set('.cta-band h2', cfg.cta.heading);
+    set('.cta-band p', cfg.cta.text);
+    set('.btn-cta', cfg.cta.buttonText);
+  }).catch(() => {}); // silently fall back to baked-in HTML if fetch fails
+  </script>
+  <script>
   // ── GALLERY DATA ──────────────────────────────────────────────────────────
   const CL = 'https://res.cloudinary.com/dgioaobur/image/upload/';
 
