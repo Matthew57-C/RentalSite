@@ -185,5 +185,46 @@
   <script src="js/properties.js"></script>
   <script src="js/content.js"></script>
   <script src="js/main.js"></script>
+  <script>
+  // ── CONFIG LOADER (config/index.json) ─────────────────────────────────────
+  fetch('config/index.json').then(r => r.json()).then(cfg => {
+    const set = (sel, val) => { const el = document.querySelector(sel); if (el) el.textContent = val; };
+
+    // Hero eyebrow
+    set('.para-eyebrow', cfg.hero.eyebrow);
+
+    // Split panels
+    document.querySelectorAll('.split-panel').forEach((panel, i) => {
+      const p = cfg.splitPanels[i]; if (!p) return;
+      set.call(null, '', ''); // no-op; use direct queries below
+      const tag = panel.querySelector('.split-tag');
+      const h2  = panel.querySelector('h2');
+      const txt = panel.querySelector('p');
+      const btn = panel.querySelector('.btn');
+      if (tag) tag.textContent = p.tag;
+      if (h2)  h2.innerHTML = p.headingLine1 + '<br/><em>' + p.headingLine2 + '</em>';
+      if (txt) txt.textContent = p.text;
+      if (btn) btn.textContent = p.button;
+    });
+
+    // Why us
+    set('.why-section .section-label', cfg.whyUs.sectionLabel);
+    set('.why-section .section-title', cfg.whyUs.heading);
+    document.querySelectorAll('.feature-card').forEach((card, i) => {
+      const item = cfg.whyUs.cards[i]; if (!item) return;
+      card.querySelector('.feature-num').textContent = item.num;
+      card.querySelector('h3').textContent = item.heading;
+      card.querySelector('p').textContent = item.text;
+    });
+
+    // Contact section
+    set('.contact-section .section-label', cfg.contact.sectionLabel);
+    set('.contact-section .section-title', cfg.contact.heading);
+    set('.contact-text', cfg.contact.text);
+
+    // Footer
+    set('.footer-legal', cfg.footer.legal);
+  }).catch(() => {});
+  </script>
 </body>
 </html>

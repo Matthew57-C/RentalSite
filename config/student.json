@@ -1,0 +1,47 @@
+{
+  "hero": {
+    "eyebrow": "Student Accommodation · Cambridge",
+    "titleLine1": "Rooms that feel",
+    "titleLine2": "like home",
+    "subtitle": "Bills included. Fully furnished. Minutes from your college."
+  },
+
+  "stats": [
+    { "num": "24hr", "label": "Response time" },
+    { "num": "Bills", "label": "All included" },
+    { "num": "£0",   "label": "Hidden fees" }
+  ],
+
+  "listings": {
+    "sectionLabel": "Available now",
+    "heading": "Student Rooms"
+  },
+
+  "included": {
+    "sectionLabel": "Every room includes",
+    "heading": "What you get",
+    "cards": [
+      { "icon": "💡", "heading": "All Bills",          "text": "Gas, electricity, water and broadband included in rent." },
+      { "icon": "📶", "heading": "Fast Broadband",     "text": "Gigabit fibre — perfect for lectures and streaming." },
+      { "icon": "🛋️", "heading": "Fully Furnished",    "text": "Bed, desk, wardrobe — everything you need from day one." },
+      { "icon": "🔐", "heading": "Secure Entry",       "text": "Key fob or smart lock access on all properties." },
+      { "icon": "🧹", "heading": "Communal Cleaning",  "text": "Shared spaces cleaned regularly — it's sorted for you." },
+      { "icon": "🛠️", "heading": "Quick Maintenance",  "text": "Report issues via WhatsApp and we'll fix it fast." }
+    ]
+  },
+
+  "quote": {
+    "text": "Genuinely the best student house I lived in. Always felt looked after.",
+    "cite": "— Previous tenant, Cambridge"
+  },
+
+  "cta": {
+    "heading": "Ready to find your room?",
+    "text": "Get in touch to arrange a viewing — we'll respond within 24 hours.",
+    "buttonText": "Enquire Now →"
+  },
+
+  "footer": {
+    "legal": "© 2025 HomeHaven Properties"
+  }
+}

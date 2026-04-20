@@ -92,7 +92,7 @@
   </section>
 
   <!-- WHAT'S INCLUDED -->
-  <section style="padding: var(--space-xl) 0; background: #fff;">
+  <section id="included" style="padding: var(--space-xl) 0; background: #fff;">
     <div class="container">
       <div class="reveal" style="text-align:center">
         <span class="section-label">Every room includes</span>
@@ -148,5 +148,52 @@
   <script src="js/properties.js"></script>
   <script src="js/main.js"></script>
   <script>document.addEventListener('DOMContentLoaded',()=>{ renderGrid('student','studentGrid','studentEmpty'); initFilters(); });</script>
+  <script>
+  // ── CONFIG LOADER (config/student.json) ───────────────────────────────────
+  fetch('config/student.json').then(r => r.json()).then(cfg => {
+    const set = (sel, val) => { const el = document.querySelector(sel); if (el) el.textContent = val; };
+
+    // Hero
+    set('.hero-eyebrow', cfg.hero.eyebrow);
+    set('.hero-sub', cfg.hero.subtitle);
+    const ht = document.querySelector('.hero-title');
+    if (ht) ht.innerHTML = cfg.hero.titleLine1 + '<br/><em>' + cfg.hero.titleLine2 + '</em>';
+
+    // Stats strip
+    document.querySelectorAll('.stat-strip .stat-item').forEach((el, i) => {
+      const s = cfg.stats[i]; if (!s) return;
+      el.querySelector('.stat-num').textContent = s.num;
+      el.querySelector('.stat-label').textContent = s.label;
+    });
+
+    // Listings section
+    set('.listings-section .section-label', cfg.listings.sectionLabel);
+    set('.listings-section .section-title', cfg.listings.heading);
+
+    // What's included
+    set('#included .section-label', cfg.included.sectionLabel);
+    set('#included .section-title', cfg.included.heading);
+    document.querySelectorAll('#included .inc-card').forEach((card, i) => {
+      const item = cfg.included.cards[i]; if (!item) return;
+      card.querySelector('.inc-icon').textContent = item.icon;
+      card.querySelector('h4').textContent = item.heading;
+      card.querySelector('p').textContent = item.text;
+    });
+
+    // Quote band
+    const bq = document.querySelector('.band-quote');
+    if (bq) bq.textContent = '\u201c' + cfg.quote.text + '\u201d';
+    set('.band-cite', cfg.quote.cite);
+
+    // CTA
+    set('.page-cta h2', cfg.cta.heading);
+    set('.page-cta p', cfg.cta.text);
+    const ctaBtn = document.querySelector('.page-cta .btn');
+    if (ctaBtn) ctaBtn.textContent = cfg.cta.buttonText;
+
+    // Footer
+    set('.footer-legal', cfg.footer.legal);
+  }).catch(() => {});
+  </script>
 </body>
 </html>
