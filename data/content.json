@@ -1,5 +1,5 @@
 {
-  "stat1Num": 50,
+  "stat1Num": 5,
   "stat1Label": "Properties managed",
   "stat2Num": 98,
   "stat2Label": "Tenant satisfaction",
@@ -10,8 +10,17 @@
   "email": "hello@homehaven.co.uk",
   "phone": "+44 1234 567 890",
   "quotes": [
-    { "text": "\u201cThe best accommodation I\u2019ve ever rented. It genuinely felt like home.\u201d", "cite": "\u2014 Previous tenant, Cambridge" },
-    { "text": "\u201cExceptional value, beautifully maintained, and the location is unbeatable.\u201d", "cite": "\u2014 Student tenant, 2024" },
-    { "text": "\u201cThe Phuket villa exceeded every expectation. We\u2019re already planning our return.\u201d", "cite": "\u2014 Villa guest, 2025" }
+    {
+      "text": "“The best accommodation I’ve ever rented. It genuinely felt like home.”",
+      "cite": "— Previous tenant, Cambridge"
+    },
+    {
+      "text": "“Exceptional value, beautifully maintained, and the location is unbeatable.”",
+      "cite": "— Student tenant, 2024"
+    },
+    {
+      "text": "“The Phuket villa exceeded every expectation. We’re already planning our return.”",
+      "cite": "— Villa guest, 2025"
+    }
   ]
 }
