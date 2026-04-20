@@ -1,9 +1,9 @@
 {
   "hero": {
-    "eyebrow": "— Kata Noi · Phuket, Thailand —",
+    "eyebrow": "— Kata · Phuket · Thailand —",
     "titleLine1": "The Heights",
     "titleLine2": "Villa",
-    "subtitle": "A private four-bedroom retreat above the Andaman Sea."
+    "subtitle": "A private two-bedroom retreat above the Andaman Sea."
   },
 
   "stats": [
@@ -14,27 +14,25 @@
   ],
 
   "villa": {
-    "locationTag": "Kata Noi · Phuket, Thailand",
+    "locationTag": "Kata · Phuket · Thailand",
     "title": "The Heights Villa",
     "quickfacts": [
-      "4 bedrooms",
-      "3 bathrooms",
-      "Up to 8 guests",
-      "5 min to Kata Beach"
+      "2 bedrooms",
+      "2 bathrooms",
+      "Up to 5 guests",
+      "10 min to Kata Beach"
     ],
-    "description": "Perched above the emerald waters of Kata Noi, The Heights Villa offers four elegantly appointed bedrooms, a private infinity pool and sweeping panoramic views across the Andaman Sea. Fully furnished and beautifully maintained, it is the ideal base for exploring Phuket's southern coastline — whether you're here for a long weekend or an extended escape. Book direct for the best rate and a personal welcome.",
+    "description": "Perched above the emerald waters of Kata Beach, The Heights Villa offers two elegantly appointed bedrooms, a shared infinity pool and sweeping panoramic views across the Andaman Sea. Fully furnished and beautifully maintained, it is the ideal base for exploring Phuket's southern coastline — whether you're here for a long weekend or an extended escape. Book direct for the best rate and a personal welcome.",
     "featuresLabel": "What's included",
     "features": [
-      "Private infinity pool with ocean views",
+      "Infinity pool with ocean views",
       "Fully equipped modern kitchen",
-      "Airport transfer on arrival",
-      "Daily housekeeping service",
+      "Weekly housekeeping service",
       "Air conditioning throughout",
       "High-speed fibre WiFi",
       "Outdoor dining terrace",
       "Smart TV & streaming",
       "Towels, linen & toiletries",
-      "Dedicated host contact 24/7"
     ]
   },
 
@@ -84,11 +82,10 @@
     "sectionLabel": "The villa includes",
     "heading": "Everything you need",
     "items": [
-      "Private Pool",
+      "Infinity Pool",
       "Fast WiFi",
-      "Airport Transfer",
       "Full Kitchen",
-      "Daily Housekeeping",
+      "Weekly Housekeeping",
       "Linen & Towels",
       "Secure Entry",
       "Air Conditioning"
