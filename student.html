@@ -150,7 +150,7 @@
   <script>document.addEventListener('DOMContentLoaded',()=>{ renderGrid('student','studentGrid','studentEmpty'); initFilters(); });</script>
   <script>
   // ── CONFIG LOADER (config/student.json) ───────────────────────────────────
-  fetch('config/student.json').then(r => r.json()).then(cfg => {
+  fetch('config/student.json', { cache: 'no-cache' }).then(r => r.json()).then(cfg => {
     const set = (sel, val) => { const el = document.querySelector(sel); if (el) el.textContent = val; };
 
     // Hero

@@ -187,7 +187,7 @@
   <script src="js/main.js"></script>
   <script>
   // ── CONFIG LOADER (config/index.json) ─────────────────────────────────────
-  fetch('config/index.json').then(r => r.json()).then(cfg => {
+  fetch('config/index.json', { cache: 'no-cache' }).then(r => r.json()).then(cfg => {
     const set = (sel, val) => { const el = document.querySelector(sel); if (el) el.textContent = val; };
 
     // Hero eyebrow

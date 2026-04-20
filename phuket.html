@@ -492,7 +492,7 @@
   // ── CONFIG LOADER ─────────────────────────────────────────────────────────
   // Reads config/phuket.json and populates the page. Edit that file to change
   // any text, prices, stats or copy without touching this HTML.
-  fetch('config/phuket.json').then(r => r.json()).then(cfg => {
+  fetch('config/phuket.json', { cache: 'no-cache' }).then(r => r.json()).then(cfg => {
     const set = (sel, val) => { const el = document.querySelector(sel); if (el) el.textContent = val; };
 
     // Hero
