@@ -1,4 +1,82 @@
-/* main.js v2 — Nav, Reveal, Modal, Filters, Contact */
+/* main.js v3 — Nav, Parallax, Reveal, Modal, Filters, Contact */
+
+// HOME HERO ADVANCED PARALLAX
+(function () {
+  const hero = document.querySelector('.home-hero');
+  if (!hero) return;
+  const heroContent = hero.querySelector('.hero-content');
+  const decos = hero.querySelectorAll('[data-depth]');
+  const lerp = (a, b, t) => a + (b - a) * t;
+  let mx = 0, my = 0, cx = 0, cy = 0, sy = 0, tick = 0;
+
+  window.addEventListener('scroll', () => { sy = window.scrollY; }, { passive: true });
+  document.addEventListener('mousemove', e => {
+    mx = (e.clientX / window.innerWidth - 0.5) * -22;
+    my = (e.clientY / window.innerHeight - 0.5) * -14;
+  });
+
+  (function raf() {
+    tick++;
+    cx = lerp(cx, mx, 0.055);
+    cy = lerp(cy, my, 0.055);
+    const ty = Math.min(sy * 0.28, 90);
+
+    hero.style.setProperty('--hero-tx', `${cx}px`);
+    hero.style.setProperty('--hero-ty', `${cy + ty}px`);
+
+    if (heroContent) {
+      const ratio = Math.min(sy / (window.innerHeight * 0.55), 1);
+      heroContent.style.opacity = Math.max(1 - ratio * 1.1, 0);
+      heroContent.style.transform = `translateY(${ratio * -35}px)`;
+    }
+
+    decos.forEach((el, i) => {
+      const d = parseFloat(el.dataset.depth) || 0.3;
+      const fy = Math.sin((tick + i * 90) * 0.007) * 18;
+      const fx = Math.cos((tick + i * 60) * 0.004) * 8;
+      el.style.transform = `translate(calc(${cx * d}px + ${fx}px), calc(${cy * d}px + ${fy}px))`;
+    });
+
+    requestAnimationFrame(raf);
+  })();
+})();
+
+// SPLIT PANEL VISIBILITY — hide panels with no properties
+(function () {
+  if (typeof getProperties !== 'function') return;
+  const check = (type, sel) => {
+    if (getProperties(type).length) return;
+    const panel = document.querySelector(sel);
+    if (!panel) return;
+    panel.style.pointerEvents = 'none';
+    const tag = panel.querySelector('.split-tag');
+    if (tag) tag.textContent = 'Coming Soon';
+    const btn = panel.querySelector('.btn');
+    if (btn) btn.style.display = 'none';
+  };
+  check('student', '.split-student');
+  check('holiday', '.split-holiday');
+})();
+
+// QUOTE CYCLING
+window.cycleQuotes = function (quotes) {
+  if (!quotes || quotes.length < 2) return;
+  const q = document.getElementById('hhQuote');
+  const c = document.getElementById('hhCite');
+  if (!q || !c) return;
+  let idx = 0;
+  setInterval(() => {
+    q.classList.add('quote-fade');
+    c.classList.add('quote-fade');
+    setTimeout(() => {
+      idx = (idx + 1) % quotes.length;
+      q.textContent = quotes[idx].text;
+      c.textContent = quotes[idx].cite;
+      q.classList.remove('quote-fade');
+      c.classList.remove('quote-fade');
+    }, 700);
+  }, 6000);
+};
 
 // NAV
 const nav = document.getElementById('mainNav');

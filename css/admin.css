@@ -119,6 +119,14 @@ body.admin-page { background: var(--ab); min-height: 100vh; font-family: 'Jost',
 .btn-danger { padding: 0.65rem 1.4rem; border: 1.5px solid var(--adng); color: var(--adng); border-radius: 4px; font-family: 'Jost', sans-serif; font-size: 0.8rem; font-weight: 500; letter-spacing: 0.06em; transition: all 0.2s; }
 .btn-danger:hover { background: var(--adng); color: #fff; }
 
+/* QUOTE BANK */
+.quote-list { display: flex; flex-direction: column; gap: 0.6rem; margin-bottom: 1rem; }
+.admin-quote-item { background: var(--ab); border: 1px solid var(--abor); border-radius: 6px; padding: 0.85rem 1rem; }
+.admin-quote-text { font-size: 0.88rem; color: var(--ad); font-style: italic; margin-bottom: 0.25rem; }
+.admin-quote-cite { font-size: 0.76rem; color: var(--am); margin-bottom: 0.5rem; }
+.admin-empty-quotes { font-size: 0.85rem; color: var(--am); padding: 1rem; text-align: center; background: var(--ab); border-radius: 6px; margin-bottom: 1rem; }
+.quote-add-form { border-top: 1px solid var(--abor); padding-top: 1rem; }
+
 @media (max-width: 900px) {
   :root { --asw: 0px; }
   .admin-sidebar { width: 100%; height: auto; position: static; flex-direction: row; flex-wrap: wrap; padding: 1rem; gap: 0.5rem; }

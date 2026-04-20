@@ -148,14 +148,36 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
   to   { opacity: 1; transform: translateY(0); }
 }
 
-/* Homepage hero */
+/* Homepage hero — JS drives parallax via CSS vars */
 .home-hero::before {
   background-image: url('https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=2000&q=85');
   background-position: center 40%;
+  background-attachment: scroll;
+  transform: translate(var(--hero-tx, 0px), var(--hero-ty, 0px)) scale(1.14);
+  transition: none;
+  will-change: transform;
 }
 .home-hero::after {
-  background: linear-gradient(to bottom, rgba(10,14,8,0.3) 0%, rgba(10,14,8,0.1) 40%, rgba(10,14,8,0.72) 100%);
+  background: linear-gradient(to bottom, rgba(10,14,8,0.28) 0%, rgba(10,14,8,0.08) 40%, rgba(10,14,8,0.75) 100%);
 }
+
+/* Hero deco floating elements */
+.hero-deco { position: absolute; inset: 0; z-index: 1; pointer-events: none; overflow: hidden; }
+.deco-line {
+  position: absolute; width: 1px;
+  background: linear-gradient(to bottom, transparent, rgba(255,255,255,0.22), transparent);
+  will-change: transform;
+}
+.deco-orb {
+  position: absolute; border-radius: 50%;
+  border: 1px solid rgba(255,255,255,0.1);
+  will-change: transform;
+}
+.dl-1 { height: clamp(80px,14vh,130px); left: 18%; top: 20%; }
+.dl-2 { height: clamp(50px,9vh,90px); right: 23%; bottom: 30%; }
+.dl-3 { height: clamp(35px,7vh,65px); left: 52%; top: 62%; opacity: 0.5; }
+.do-1 { width: 80px; height: 80px; right: 16%; top: 24%; }
+.do-2 { width: 38px; height: 38px; left: 27%; bottom: 27%; opacity: 0.55; }
 
 /* Student hero */
 .student-hero::before {
@@ -322,11 +344,13 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
 }
 .split-panel::after {
   content: ''; position: absolute; inset: 0;
-  background: linear-gradient(to top, rgba(0,0,0,0.72) 0%, rgba(0,0,0,0.05) 55%);
+  background: linear-gradient(to top, rgba(0,0,0,0.78) 0%, rgba(0,0,0,0.1) 55%);
   z-index: 1;
   transition: opacity var(--tr);
 }
-.split-panel:hover::after { opacity: 0.8; }
+.split-panel:hover::after { opacity: 0.65; }
+.split-panel::before { transition: transform 0.8s cubic-bezier(0.25,0.46,0.45,0.94); }
+.split-panel:hover::before { transform: scale(1.06); }
 
 .split-student::before { background-image: url('https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=1400&q=80'); }
 .split-holiday::before { background-image: url('https://images.unsplash.com/photo-1552465011-b4e21bf6e79a?w=1200&q=80'); }
@@ -466,8 +490,14 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
   font-size: clamp(1.5rem, 4vw, 2.8rem);
   font-style: italic; font-weight: 300; line-height: 1.4;
   margin-bottom: 1.2rem; color: #fff;
+  transition: opacity 0.7s ease, transform 0.7s ease;
 }
-.band-cite { font-size: 0.78rem; letter-spacing: 0.16em; text-transform: uppercase; color: rgba(255,255,255,0.52); }
+.band-cite {
+  font-size: 0.78rem; letter-spacing: 0.16em; text-transform: uppercase;
+  color: rgba(255,255,255,0.52);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+.quote-fade { opacity: 0 !important; transform: translateY(12px); }
 
 /* =============================================
    LISTINGS SECTION HEADER + FILTERS

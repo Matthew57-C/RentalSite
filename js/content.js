@@ -10,8 +10,9 @@ const CONTENT_DEFAULTS = {
   stat4Num: 24, stat4Label: 'Response time',
   email: 'hello@homehaven.co.uk',
   phone: '+44 1234 567 890',
-  quote: '\u201cThe best accommodation I\u2019ve ever rented. It genuinely felt like home.\u201d',
-  cite: '\u2014 Previous tenant, Cambridge',
+  quotes: [
+    { text: '\u201cThe best accommodation I\u2019ve ever rented. It genuinely felt like home.\u201d', cite: '\u2014 Previous tenant, Cambridge' }
+  ],
 };
 
 async function fetchContent() {
@@ -27,29 +28,18 @@ async function fetchContent() {
 
 async function saveContent(patch, pat) {
   const apiUrl = `https://api.github.com/repos/${HH_GH_USER}/${HH_GH_REPO}/contents/${HH_CONTENT_PATH}`;
-
   const metaRes = await fetch(apiUrl, {
     headers: { 'Authorization': `token ${pat}`, 'Accept': 'application/vnd.github.v3+json' }
   });
-  if (!metaRes.ok) throw new Error('GitHub token invalid or missing — check Settings.');
-
+  if (!metaRes.ok) throw new Error('GitHub token invalid — check Settings.');
   const meta = await metaRes.json();
   const current = JSON.parse(atob(meta.content.replace(/\n/g, '')));
   const updated = Object.assign(current, patch);
   const encoded = btoa(unescape(encodeURIComponent(JSON.stringify(updated, null, 2))));
-
   const putRes = await fetch(apiUrl, {
     method: 'PUT',
-    headers: {
-      'Authorization': `token ${pat}`,
-      'Content-Type': 'application/json',
-      'Accept': 'application/vnd.github.v3+json'
-    },
-    body: JSON.stringify({
-      message: 'Update site content via admin panel',
-      content: encoded,
-      sha: meta.sha
-    })
+    headers: { 'Authorization': `token ${pat}`, 'Content-Type': 'application/json', 'Accept': 'application/vnd.github.v3+json' },
+    body: JSON.stringify({ message: 'Update site content via admin panel', content: encoded, sha: meta.sha })
   });
   if (!putRes.ok) throw new Error('Save failed — check token has repo write access.');
 }
@@ -65,10 +55,20 @@ function applyContentToDOM(c) {
   if (emailEl) { emailEl.textContent = c.email; emailEl.href = `mailto:${c.email}`; }
   const phoneEl = document.getElementById('hhPhone');
   if (phoneEl) { phoneEl.textContent = c.phone; phoneEl.href = `tel:${c.phone.replace(/[^+\d]/g, '')}`; }
+
+  const quotes = c.quotes && c.quotes.length ? c.quotes : CONTENT_DEFAULTS.quotes;
   const quoteEl = document.getElementById('hhQuote');
-  if (quoteEl) quoteEl.textContent = c.quote;
   const citeEl = document.getElementById('hhCite');
-  if (citeEl) citeEl.textContent = c.cite;
+  if (quoteEl) quoteEl.textContent = quotes[0].text;
+  if (citeEl) citeEl.textContent = quotes[0].cite;
+
+  if (quotes.length > 1) {
+    const start = () => {
+      if (typeof window.cycleQuotes === 'function') window.cycleQuotes(quotes);
+      else setTimeout(start, 200);
+    };
+    setTimeout(start, 1200);
+  }
 }
 
 fetchContent().then(applyContentToDOM);

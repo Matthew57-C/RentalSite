@@ -9,6 +9,9 @@
   "stat4Label": "Response time",
   "email": "hello@homehaven.co.uk",
   "phone": "+44 1234 567 890",
-  "quote": "\u201cThe best accommodation I\u2019ve ever rented. It genuinely felt like home.\u201d",
-  "cite": "\u2014 Previous tenant, Cambridge"
+  "quotes": [
+    { "text": "\u201cThe best accommodation I\u2019ve ever rented. It genuinely felt like home.\u201d", "cite": "\u2014 Previous tenant, Cambridge" },
+    { "text": "\u201cExceptional value, beautifully maintained, and the location is unbeatable.\u201d", "cite": "\u2014 Student tenant, 2024" },
+    { "text": "\u201cThe Phuket villa exceeded every expectation. We\u2019re already planning our return.\u201d", "cite": "\u2014 Villa guest, 2025" }
+  ]
 }

@@ -184,10 +184,15 @@
           </div>
 
           <div class="settings-card">
-            <h3>Testimonial Quote</h3>
-            <div class="form-group" style="margin-bottom:1rem"><label>Quote</label><textarea id="cQuote" rows="3"></textarea></div>
-            <div class="form-group" style="margin-bottom:1.2rem"><label>Attribution</label><input type="text" id="cCite"/></div>
-            <button class="btn-admin" id="saveQuoteBtn" style="width:auto;padding:0.75rem 2rem">Save Quote</button>
+            <h3>Testimonial Quotes</h3>
+            <p>The homepage cycles through these every 6 seconds.</p>
+            <div id="quoteList" class="quote-list"></div>
+            <div class="quote-add-form">
+              <div class="form-group" style="margin-bottom:0.8rem"><label>Quote Text</label><textarea id="newQuoteText" rows="2" placeholder="Enter the testimonial…"></textarea></div>
+              <div class="form-group" style="margin-bottom:1rem"><label>Attribution</label><input type="text" id="newQuoteCite" placeholder="— Name, context"/></div>
+              <button class="btn-outline" id="addQuoteBtn">+ Add Quote</button>
+            </div>
+            <button class="btn-admin" id="saveQuoteBtn" style="width:auto;padding:0.75rem 2rem;margin-top:1.2rem">Save All Quotes</button>
             <p class="save-msg" id="quoteMsg" style="margin-top:0.7rem"></p>
           </div>
 

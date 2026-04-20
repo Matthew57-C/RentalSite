@@ -222,8 +222,8 @@ function loadContentPanel() {
     }
     set('cEmail', c.email);
     set('cPhone', c.phone);
-    set('cQuote', c.quote);
-    set('cCite', c.cite);
+    quoteBank = Array.isArray(c.quotes) ? [...c.quotes] : [];
+    renderQuoteList();
   });
   const ghPat = document.getElementById('ghPat');
   if (ghPat && getPat()) ghPat.placeholder = 'Token saved \u2014 paste new one to replace';
@@ -272,11 +272,42 @@ document.getElementById('saveContactBtn')?.addEventListener('click', async () =>
   } catch (e) { contentMsg('contactMsg', e.message, true, 'saveContactBtn'); }
 });
 
+// QUOTE BANK
+let quoteBank = [];
+
+function renderQuoteList() {
+  const list = document.getElementById('quoteList');
+  if (!list) return;
+  if (!quoteBank.length) {
+    list.innerHTML = '<p class="admin-empty-quotes">No quotes yet — add one below.</p>';
+    return;
+  }
+  list.innerHTML = quoteBank.map((q, i) => `
+    <div class="admin-quote-item">
+      <p class="admin-quote-text">${q.text}</p>
+      <p class="admin-quote-cite">${q.cite}</p>
+      <button class="btn-del" data-qi="${i}">Remove</button>
+    </div>`).join('');
+  list.querySelectorAll('[data-qi]').forEach(btn =>
+    btn.addEventListener('click', () => { quoteBank.splice(+btn.dataset.qi, 1); renderQuoteList(); })
+  );
+}
+
+document.getElementById('addQuoteBtn')?.addEventListener('click', () => {
+  const text = document.getElementById('newQuoteText')?.value.trim();
+  const cite = document.getElementById('newQuoteCite')?.value.trim();
+  if (!text) return;
+  quoteBank.push({ text, cite: cite || '' });
+  renderQuoteList();
+  if (document.getElementById('newQuoteText')) document.getElementById('newQuoteText').value = '';
+  if (document.getElementById('newQuoteCite')) document.getElementById('newQuoteCite').value = '';
+});
+
 document.getElementById('saveQuoteBtn')?.addEventListener('click', async () => {
   if (!requirePat('quoteMsg', 'saveQuoteBtn')) return;
   contentMsg('quoteMsg', 'Saving\u2026', false, 'saveQuoteBtn');
   try {
-    await saveContent({ quote: document.getElementById('cQuote').value.trim(), cite: document.getElementById('cCite').value.trim() }, getPat());
+    await saveContent({ quotes: quoteBank }, getPat());
     contentMsg('quoteMsg', 'Live in ~30s.', false, 'saveQuoteBtn');
   } catch (e) { contentMsg('quoteMsg', e.message, true, 'saveQuoteBtn'); }
 });
