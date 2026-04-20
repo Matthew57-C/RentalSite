@@ -121,7 +121,7 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
   position: absolute; inset: 0;
   background-attachment: fixed;
   background-size: cover;
-  background-position: center 30%;
+  background-position: center 50% 35%;
   z-index: 0;
 }
 
