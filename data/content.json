@@ -9,18 +9,5 @@
   "stat4Label": "Response time",
   "email": "suziezhu7717@gmail.com",
   "phone": "07762219808",
-  "quotes": [
-    {
-      "text": "âThe best accommodation Iâve ever rented. It genuinely felt like home.â",
-      "cite": "â Previous tenant, Cambridge"
-    },
-    {
-      "text": "âExceptional value, beautifully maintained, and the location is unbeatable.â",
-      "cite": "â Student tenant, 2024"
-    },
-    {
-      "text": "âThe Phuket villa exceeded every expectation. Weâre already planning our return.â",
-      "cite": "â Villa guest, 2025"
-    }
-  ]
+  "quotes": []
 }
