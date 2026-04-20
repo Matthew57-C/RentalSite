@@ -8,7 +8,6 @@
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet"/>
   <style>
     body { background: var(--modern-bg); color: var(--modern-text); }
-
     body .btn-warm { background: var(--modern-accent); }
     body .btn-warm:hover { background: var(--modern-accent-light); box-shadow: 0 8px 28px rgba(30,92,58,0.35); }
     body .section-title { color: var(--modern-dark); }
@@ -17,7 +16,6 @@
     .main-nav.scrolled .nav-link { color: var(--modern-muted); }
     .main-nav.scrolled .nav-link.active { color: var(--modern-accent); }
     .main-nav.scrolled .nav-toggle span { background: var(--modern-dark); }
-
     .phuket-eyebrow { font-size: clamp(0.68rem,1.2vw,0.78rem); letter-spacing: 0.3em; text-transform: uppercase; color: rgba(255,255,255,0.6); display: block; margin-bottom: 1.5rem; }
 
     /* STATS BAR */
@@ -32,18 +30,76 @@
     /* VILLA SHOWCASE */
     .villa-showcase { padding: var(--space-xl) 0; }
 
-    .villa-gallery { display: grid; grid-template-columns: 2fr 1fr; gap: 3px; border-radius: var(--radius-lg); overflow: hidden; margin-bottom: clamp(3rem,6vw,5rem); height: clamp(280px,50vh,520px); }
-    .gallery-main { position: relative; overflow: hidden; }
-    .gallery-main img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.8s ease; }
+    /* GALLERY — Airbnb style */
+    .villa-gallery {
+      display: grid;
+      grid-template-columns: 1.62fr 1fr;
+      gap: 4px;
+      height: clamp(300px, 52vh, 540px);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      margin-bottom: clamp(3rem,6vw,5rem);
+    }
+    .gallery-main { position: relative; overflow: hidden; cursor: pointer; }
+    .gallery-main img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.7s ease; display: block; }
     .gallery-main:hover img { transform: scale(1.04); }
-    .gallery-view-all { position: absolute; bottom: 1rem; right: 1rem; background: rgba(255,255,255,0.95); backdrop-filter: blur(8px); color: var(--modern-dark); padding: 0.5rem 1.1rem; border-radius: var(--radius); font-family: 'Jost', sans-serif; font-size: 0.76rem; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; border: none; cursor: default; }
-    .gallery-side { display: flex; flex-direction: column; gap: 3px; }
-    .gallery-side-img { flex: 1; overflow: hidden; }
-    .gallery-side-img img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.8s ease; }
-    .gallery-side-img:hover img { transform: scale(1.04); }
 
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      grid-template-rows: 1fr 1fr;
+      gap: 4px;
+    }
+    .gallery-thumb { position: relative; overflow: hidden; cursor: pointer; }
+    .gallery-thumb img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.7s ease; }
+    .gallery-thumb:hover img { transform: scale(1.05); }
+
+    .gallery-more-overlay {
+      position: absolute; inset: 0;
+      background: rgba(10,16,10,0.52);
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      gap: 0.45rem; color: #fff;
+      font-family: 'Jost', sans-serif;
+      font-size: clamp(0.72rem,1.1vw,0.82rem);
+      font-weight: 500; letter-spacing: 0.08em;
+      transition: background 0.25s;
+    }
+    .gallery-more-overlay:hover { background: rgba(10,16,10,0.7); }
+    .gallery-more-overlay svg { width: 22px; height: 22px; }
+
+    /* LIGHTBOX */
+    .gallery-lightbox {
+      position: fixed; inset: 0; z-index: 300;
+      background: rgba(4,7,4,0.97);
+      display: flex; align-items: center; justify-content: center;
+      opacity: 0; pointer-events: none;
+      transition: opacity 0.25s ease;
+    }
+    .gallery-lightbox.open { opacity: 1; pointer-events: all; }
+    .lb-img-wrap {
+      display: flex; align-items: center; justify-content: center;
+      max-width: 90vw; max-height: 86vh;
+    }
+    .lb-img-wrap img { max-width: 100%; max-height: 86vh; object-fit: contain; display: block; border-radius: 2px; }
+    .lb-close, .lb-prev, .lb-next {
+      position: absolute; border: none; cursor: pointer;
+      color: rgba(255,255,255,0.82);
+      background: rgba(255,255,255,0.1); border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      transition: background 0.2s; font-family: 'Jost', sans-serif;
+    }
+    .lb-close:hover, .lb-prev:hover, .lb-next:hover { background: rgba(255,255,255,0.22); color: #fff; }
+    .lb-close { top: 1.2rem; right: 1.4rem; width: 42px; height: 42px; font-size: 1rem; }
+    .lb-prev  { left: clamp(0.5rem,2vw,1.6rem); top: 50%; transform: translateY(-50%); width: 50px; height: 50px; font-size: 1.6rem; line-height: 1; }
+    .lb-next  { right: clamp(0.5rem,2vw,1.6rem); top: 50%; transform: translateY(-50%); width: 50px; height: 50px; font-size: 1.6rem; line-height: 1; }
+    .lb-counter {
+      position: absolute; bottom: 1.4rem; left: 50%; transform: translateX(-50%);
+      color: rgba(255,255,255,0.45); font-size: 0.76rem; letter-spacing: 0.14em;
+      font-family: 'Jost', sans-serif;
+    }
+
+    /* VILLA INFO */
     .villa-info-grid { display: grid; grid-template-columns: 1fr 310px; gap: clamp(3rem,7vw,6rem); align-items: start; }
-
     .villa-location-tag { font-size: 0.72rem; letter-spacing: 0.24em; text-transform: uppercase; color: var(--modern-accent); display: block; margin-bottom: 0.6rem; }
     .villa-title { font-family: 'Cormorant Garamond', serif; font-size: clamp(2.2rem,4.5vw,3.4rem); font-weight: 300; color: var(--modern-dark); margin-bottom: 1.4rem; line-height: 1.1; }
     .villa-rule { border: none; border-top: 1px solid var(--modern-line); margin: 0 0 1.4rem; }
@@ -96,17 +152,19 @@
     .btn-cta:hover { background: rgba(255,255,255,0.9); box-shadow: 0 8px 24px rgba(0,0,0,0.2); transform: translateY(-2px); }
 
     .modern-footer { background: var(--modern-dark); }
-    .phuket-modal .modal-price { color: var(--modern-accent); }
 
     @media(max-width:768px) {
       .stats-inner { flex-direction: column; gap: 1.2rem; }
       .stat-sep { width: 60px; height: 1px; }
       .villa-gallery { grid-template-columns: 1fr; height: auto; }
-      .gallery-main { height: 60vw; }
-      .gallery-side { flex-direction: row; height: 32vw; }
+      .gallery-main { height: 58vw; }
+      .gallery-grid { display: flex; height: 30vw; }
+      .gallery-thumb:nth-child(n+3) { display: none; }
       .villa-info-grid { grid-template-columns: 1fr; }
       .villa-features { grid-template-columns: 1fr; }
       .villa-booking-card { position: static; }
+      .lb-prev { left: 0.4rem; }
+      .lb-next { right: 0.4rem; }
     }
   </style>
 </head>
@@ -151,17 +209,29 @@
   <section class="villa-showcase" id="villa">
     <div class="container">
 
+      <!-- AIRBNB-STYLE GALLERY -->
       <div class="villa-gallery reveal">
-        <div class="gallery-main">
-          <img src="https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?w=1400&q=85" alt="The Heights Villa — infinity pool with ocean view" loading="eager"/>
-          <span class="gallery-view-all">5 Photos</span>
+        <!-- Main large image -->
+        <div class="gallery-main" onclick="openGallery(0)" role="button" aria-label="Open photo gallery">
+          <img src="https://res.cloudinary.com/dgioaobur/image/upload/w_1400,h_900,c_fill,g_auto,q_82/B21_035_vsjcib.jpg" alt="The Heights Villa interior" loading="eager"/>
         </div>
-        <div class="gallery-side">
-          <div class="gallery-side-img">
-            <img src="https://images.unsplash.com/photo-1566073771259-6a8506099945?w=800&q=80" alt="Villa outdoor terrace" loading="lazy"/>
+        <!-- 2×2 thumbnail grid -->
+        <div class="gallery-grid">
+          <div class="gallery-thumb" onclick="openGallery(1)" role="button" aria-label="Photo 2">
+            <img src="https://res.cloudinary.com/dgioaobur/image/upload/w_700,h_450,c_fill,g_auto,q_75/B21_003_rimoys.jpg" alt="Villa interior" loading="lazy"/>
           </div>
-          <div class="gallery-side-img">
-            <img src="https://images.unsplash.com/photo-1571896349842-33c89424de2d?w=800&q=80" alt="Andaman Sea views" loading="lazy"/>
+          <div class="gallery-thumb" onclick="openGallery(4)" role="button" aria-label="Kata Noi Beach">
+            <img src="https://images.unsplash.com/photo-1552465011-b4e21bf6e79a?w=700&h=450&fit=crop&q=75" alt="Kata Noi Beach, Phuket" loading="lazy"/>
+          </div>
+          <div class="gallery-thumb" onclick="openGallery(2)" role="button" aria-label="Photo 3">
+            <img src="https://res.cloudinary.com/dgioaobur/image/upload/w_700,h_450,c_fill,g_auto,q_75/B21_070_kd32f7.jpg" alt="Villa interior" loading="lazy"/>
+          </div>
+          <div class="gallery-thumb" onclick="openGallery(3)" role="button" aria-label="View all photos">
+            <img src="https://res.cloudinary.com/dgioaobur/image/upload/w_700,h_450,c_fill,g_auto,q_75/B21_061_lis3tp.jpg" alt="Villa interior" loading="lazy"/>
+            <div class="gallery-more-overlay">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
+              View all 36 photos
+            </div>
           </div>
         </div>
       </div>
@@ -229,6 +299,17 @@
 
     </div>
   </section>
+
+  <!-- LIGHTBOX -->
+  <div class="gallery-lightbox" id="galleryLb" role="dialog" aria-modal="true" aria-label="Photo gallery">
+    <button class="lb-close" id="lbClose" aria-label="Close gallery">✕</button>
+    <button class="lb-prev" id="lbPrev" aria-label="Previous photo">&#8249;</button>
+    <button class="lb-next" id="lbNext" aria-label="Next photo">&#8250;</button>
+    <div class="lb-img-wrap">
+      <img id="lbImg" src="" alt=""/>
+    </div>
+    <div class="lb-counter" id="lbCounter">1 / 36</div>
+  </div>
 
   <!-- WHY BOOK DIRECT -->
   <section class="trip-strip">
@@ -330,5 +411,108 @@
 
   <script src="js/properties.js"></script>
   <script src="js/main.js"></script>
+  <script>
+  // ── GALLERY DATA ──────────────────────────────────────────────────────────
+  // 31 apartment photos from Cloudinary + 5 Unsplash seaside shots (interspersed)
+  const CL = 'https://res.cloudinary.com/dgioaobur/image/upload/';
+  const UNS = 'https://images.unsplash.com/photo-';
+
+  function cl(id, portrait) {
+    const crop = portrait
+      ? 'w_1100,h_1467,c_fill,g_auto,q_84'
+      : 'w_1800,h_1200,c_fill,g_auto,q_84';
+    return CL + crop + '/' + id + '.jpg';
+  }
+
+  const galleryPhotos = [
+    // -- Apartment: professional landscape shots (B21 series) --
+    { src: cl('B21_035_vsjcib'),  alt: 'The Heights Villa — main living space' },
+    { src: cl('B21_003_rimoys'),  alt: 'Villa interior' },
+    { src: cl('B21_070_kd32f7'), alt: 'Villa interior' },
+    { src: cl('B21_061_lis3tp'), alt: 'Villa interior' },
+    // -- Seaside 1 --
+    { src: UNS + '1552465011-b4e21bf6e79a?w=1800&q=85', alt: 'Kata Noi Beach, Phuket' },
+    { src: cl('B21_030_rhrpco'), alt: 'Villa interior' },
+    { src: cl('B21_027_umxpor'), alt: 'Villa interior' },
+    { src: cl('B21_026_r85rtx'), alt: 'Villa interior' },
+    { src: cl('B21_020_v2fu81'), alt: 'Villa interior' },
+    // -- Seaside 2 --
+    { src: UNS + '1507525428034-b723cf961d3e?w=1800&q=85', alt: 'Andaman Sea beach, Thailand' },
+    { src: cl('B21_016_hq6j8l'), alt: 'Villa interior' },
+    { src: cl('B21_009_nj4qfz'), alt: 'Villa interior' },
+    { src: cl('B21_054_uuoqul'), alt: 'Villa interior' },
+    { src: cl('B21_053_bvbywy'), alt: 'Villa interior' },
+    // -- Seaside 3 --
+    { src: UNS + '1519046904884-53103b34b206?w=1800&q=85', alt: 'Tropical beach, Phuket' },
+    { src: cl('B21_052_zr5ws0'), alt: 'Villa interior' },
+    { src: cl('B21_034_iuongc'), alt: 'Villa interior' },
+    { src: cl('B21_032_a07fwo'), alt: 'Villa interior' },
+    { src: cl('B21_057_sbxq1s'), alt: 'Villa interior' },
+    { src: cl('B21_065_eoedu8'), alt: 'Villa interior' },
+    // -- Seaside 4 --
+    { src: UNS + '1520250497591-112f2f40a3f4?w=1800&q=85', alt: 'Infinity pool and terrace, Phuket' },
+    { src: cl('B21_066_oys9hx'), alt: 'Villa interior' },
+    { src: cl('B21_072_d3lhr9'), alt: 'Villa interior' },
+    { src: cl('B21_005_qzrj9c'), alt: 'Villa interior' },
+    { src: cl('IMG_20180802_145137_sjk93e'), alt: 'Villa exterior' },
+    // -- Seaside 5 --
+    { src: UNS + '1566073771259-6a8506099945?w=1800&q=85', alt: 'Tropical resort pool, Thailand' },
+    // -- Apartment: portrait phone shots --
+    { src: cl('IMG-2010_an5uip', true),  alt: 'Villa detail' },
+    { src: cl('IMG-2003_ysbck6', true),  alt: 'Villa detail' },
+    { src: cl('IMG-2005_xippay', true),  alt: 'Villa detail' },
+    { src: cl('IMG-2002_b8uygx', true),  alt: 'Villa detail' },
+    { src: cl('IMG-2001_fjh83j', true),  alt: 'Villa detail' },
+    { src: cl('IMG-1999_syi1ag', true),  alt: 'Villa detail' },
+    { src: cl('IMG-1973_de5dkm', true),  alt: 'Villa detail' },
+    { src: cl('IMG_20180802_145158_dwy3cl', true), alt: 'Villa exterior' },
+    { src: cl('IMG_20180802_095423_g65qoz', true), alt: 'Villa exterior' },
+    { src: cl('IMG_20180802_095411_adhmqe', true), alt: 'Villa exterior' },
+  ];
+
+  // ── LIGHTBOX LOGIC ────────────────────────────────────────────────────────
+  const lb       = document.getElementById('galleryLb');
+  const lbImg    = document.getElementById('lbImg');
+  const lbCtr    = document.getElementById('lbCounter');
+  let lbIdx = 0;
+
+  function updateLb() {
+    const p = galleryPhotos[lbIdx];
+    lbImg.src = p.src;
+    lbImg.alt = p.alt;
+    lbCtr.textContent = (lbIdx + 1) + ' / ' + galleryPhotos.length;
+  }
+
+  window.openGallery = function(i) {
+    lbIdx = i;
+    updateLb();
+    lb.classList.add('open');
+    document.body.style.overflow = 'hidden';
+  };
+
+  function closeLb() {
+    lb.classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  document.getElementById('lbClose').addEventListener('click', closeLb);
+  lb.addEventListener('click', e => { if (e.target === lb) closeLb(); });
+
+  document.getElementById('lbPrev').addEventListener('click', () => {
+    lbIdx = (lbIdx - 1 + galleryPhotos.length) % galleryPhotos.length;
+    updateLb();
+  });
+  document.getElementById('lbNext').addEventListener('click', () => {
+    lbIdx = (lbIdx + 1) % galleryPhotos.length;
+    updateLb();
+  });
+
+  document.addEventListener('keydown', e => {
+    if (!lb.classList.contains('open')) return;
+    if (e.key === 'ArrowLeft')  { lbIdx = (lbIdx - 1 + galleryPhotos.length) % galleryPhotos.length; updateLb(); }
+    if (e.key === 'ArrowRight') { lbIdx = (lbIdx + 1) % galleryPhotos.length; updateLb(); }
+    if (e.key === 'Escape')     closeLb();
+  });
+  </script>
 </body>
 </html>
