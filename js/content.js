@@ -1,5 +1,7 @@
-/* content.js — site-wide editable content via localStorage */
-const HH_CONTENT = 'hh_content_v1';
+/* content.js — fetches from GitHub, writes back via API */
+const HH_GH_USER = 'Matthew57-C';
+const HH_GH_REPO = 'RentalSite';
+const HH_CONTENT_PATH = 'data/content.json';
 
 const CONTENT_DEFAULTS = {
   stat1Num: 50, stat1Label: 'Properties managed',
@@ -12,36 +14,61 @@ const CONTENT_DEFAULTS = {
   cite: '\u2014 Previous tenant, Cambridge',
 };
 
-function getContent() {
-  try { return Object.assign({}, CONTENT_DEFAULTS, JSON.parse(localStorage.getItem(HH_CONTENT) || '{}')); }
-  catch { return Object.assign({}, CONTENT_DEFAULTS); }
+async function fetchContent() {
+  try {
+    const url = `https://raw.githubusercontent.com/${HH_GH_USER}/${HH_GH_REPO}/main/${HH_CONTENT_PATH}?t=${Date.now()}`;
+    const res = await fetch(url);
+    if (!res.ok) throw new Error();
+    return await res.json();
+  } catch {
+    return Object.assign({}, CONTENT_DEFAULTS);
+  }
 }
 
-function saveContent(patch) {
-  localStorage.setItem(HH_CONTENT, JSON.stringify(Object.assign(getContent(), patch)));
+async function saveContent(patch, pat) {
+  const apiUrl = `https://api.github.com/repos/${HH_GH_USER}/${HH_GH_REPO}/contents/${HH_CONTENT_PATH}`;
+
+  const metaRes = await fetch(apiUrl, {
+    headers: { 'Authorization': `token ${pat}`, 'Accept': 'application/vnd.github.v3+json' }
+  });
+  if (!metaRes.ok) throw new Error('GitHub token invalid or missing — check Settings.');
+
+  const meta = await metaRes.json();
+  const current = JSON.parse(atob(meta.content.replace(/\n/g, '')));
+  const updated = Object.assign(current, patch);
+  const encoded = btoa(unescape(encodeURIComponent(JSON.stringify(updated, null, 2))));
+
+  const putRes = await fetch(apiUrl, {
+    method: 'PUT',
+    headers: {
+      'Authorization': `token ${pat}`,
+      'Content-Type': 'application/json',
+      'Accept': 'application/vnd.github.v3+json'
+    },
+    body: JSON.stringify({
+      message: 'Update site content via admin panel',
+      content: encoded,
+      sha: meta.sha
+    })
+  });
+  if (!putRes.ok) throw new Error('Save failed — check token has repo write access.');
 }
 
-function applyContent() {
-  const c = getContent();
-
+function applyContentToDOM(c) {
   for (let i = 1; i <= 4; i++) {
     const numEl = document.getElementById(`hhStat${i}Num`);
     if (numEl) numEl.dataset.count = c[`stat${i}Num`];
     const labelEl = document.getElementById(`hhStat${i}Label`);
     if (labelEl) labelEl.textContent = c[`stat${i}Label`];
   }
-
   const emailEl = document.getElementById('hhEmail');
   if (emailEl) { emailEl.textContent = c.email; emailEl.href = `mailto:${c.email}`; }
-
   const phoneEl = document.getElementById('hhPhone');
   if (phoneEl) { phoneEl.textContent = c.phone; phoneEl.href = `tel:${c.phone.replace(/[^+\d]/g, '')}`; }
-
   const quoteEl = document.getElementById('hhQuote');
   if (quoteEl) quoteEl.textContent = c.quote;
-
   const citeEl = document.getElementById('hhCite');
   if (citeEl) citeEl.textContent = c.cite;
 }
 
-applyContent();
+fetchContent().then(applyContentToDOM);

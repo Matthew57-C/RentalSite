@@ -202,45 +202,74 @@ document.getElementById('saveSiteBtn').addEventListener('click', () => {
   setTimeout(() => { m.textContent = ''; }, 3000);
 });
 
+// PAT management
+const PAT_KEY = 'hh_gh_pat';
+const getPat = () => localStorage.getItem(PAT_KEY) || '';
+
+document.getElementById('savePatBtn')?.addEventListener('click', () => {
+  const val = document.getElementById('ghPat').value.trim();
+  if (val && !val.startsWith('\u2022')) localStorage.setItem(PAT_KEY, val);
+  contentMsg('patMsg', '\u2713 Token saved.', false);
+});
+
 // CONTENT PANEL
 function loadContentPanel() {
-  const c = getContent();
-  const set = (id, v) => { const el = document.getElementById(id); if (el) el.value = v ?? ''; };
-  for (let i = 1; i <= 4; i++) {
-    set(`cStat${i}Num`, c[`stat${i}Num`]);
-    set(`cStat${i}Label`, c[`stat${i}Label`]);
-  }
-  set('cEmail', c.email);
-  set('cPhone', c.phone);
-  set('cQuote', c.quote);
-  set('cCite', c.cite);
+  fetchContent().then(c => {
+    const set = (id, v) => { const el = document.getElementById(id); if (el) el.value = v ?? ''; };
+    for (let i = 1; i <= 4; i++) {
+      set(`cStat${i}Num`, c[`stat${i}Num`]);
+      set(`cStat${i}Label`, c[`stat${i}Label`]);
+    }
+    set('cEmail', c.email);
+    set('cPhone', c.phone);
+    set('cQuote', c.quote);
+    set('cCite', c.cite);
+  });
+  const ghPat = document.getElementById('ghPat');
+  if (ghPat && getPat()) ghPat.placeholder = 'Token saved \u2014 paste new one to replace';
 }
 
 function contentMsg(id, text, err) {
   const el = document.getElementById(id);
   if (!el) return;
   el.textContent = text; el.className = `save-msg${err ? ' err' : ''}`;
-  if (!err) setTimeout(() => { el.textContent = ''; }, 3000);
+  if (!err) setTimeout(() => { el.textContent = ''; }, 4000);
 }
 
-document.getElementById('saveStatsBtn')?.addEventListener('click', () => {
+function requirePat(msgId) {
+  if (getPat()) return true;
+  contentMsg(msgId, 'Add your GitHub token in Settings first.', true);
+  return false;
+}
+
+document.getElementById('saveStatsBtn')?.addEventListener('click', async () => {
+  if (!requirePat('statsMsg')) return;
   const patch = {};
   for (let i = 1; i <= 4; i++) {
     patch[`stat${i}Num`] = +document.getElementById(`cStat${i}Num`).value || 0;
     patch[`stat${i}Label`] = document.getElementById(`cStat${i}Label`).value.trim();
   }
-  saveContent(patch);
-  contentMsg('statsMsg', '✓ Stats saved!', false);
+  contentMsg('statsMsg', 'Saving\u2026', false);
+  try { await saveContent(patch, getPat()); contentMsg('statsMsg', '\u2713 Saved! Live in ~30s.', false); }
+  catch (e) { contentMsg('statsMsg', e.message, true); }
 });
 
-document.getElementById('saveContactBtn')?.addEventListener('click', () => {
-  saveContent({ email: document.getElementById('cEmail').value.trim(), phone: document.getElementById('cPhone').value.trim() });
-  contentMsg('contactMsg', '✓ Contact saved!', false);
+document.getElementById('saveContactBtn')?.addEventListener('click', async () => {
+  if (!requirePat('contactMsg')) return;
+  contentMsg('contactMsg', 'Saving\u2026', false);
+  try {
+    await saveContent({ email: document.getElementById('cEmail').value.trim(), phone: document.getElementById('cPhone').value.trim() }, getPat());
+    contentMsg('contactMsg', '\u2713 Saved! Live in ~30s.', false);
+  } catch (e) { contentMsg('contactMsg', e.message, true); }
 });
 
-document.getElementById('saveQuoteBtn')?.addEventListener('click', () => {
-  saveContent({ quote: document.getElementById('cQuote').value.trim(), cite: document.getElementById('cCite').value.trim() });
-  contentMsg('quoteMsg', '✓ Quote saved!', false);
+document.getElementById('saveQuoteBtn')?.addEventListener('click', async () => {
+  if (!requirePat('quoteMsg')) return;
+  contentMsg('quoteMsg', 'Saving\u2026', false);
+  try {
+    await saveContent({ quote: document.getElementById('cQuote').value.trim(), cite: document.getElementById('cCite').value.trim() }, getPat());
+    contentMsg('quoteMsg', '\u2713 Saved! Live in ~30s.', false);
+  } catch (e) { contentMsg('quoteMsg', e.message, true); }
 });
 
 checkAuth();
