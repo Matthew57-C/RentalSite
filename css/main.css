@@ -255,11 +255,11 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
 
 /* Phuket hero */
 .phuket-hero::before {
-  background-image: url('https://images.unsplash.com/photo-1552465011-b4e21bf6e79a?w=1800&q=80');
-  background-position: center 55%;
+  background-image: url('https://res.cloudinary.com/dgioaobur/image/upload/w_1800,h_1200,c_fill,g_auto,q_80/B21_035_vsjcib.jpg');
+  background-position: center 40%;
 }
 .phuket-hero::after {
-  background: linear-gradient(to bottom, rgba(14,18,9,0.45) 0%, rgba(14,18,9,0.25) 45%, rgba(14,18,9,0.6) 100%);
+  background: linear-gradient(to bottom, rgba(14,18,9,0.55) 0%, rgba(14,18,9,0.3) 45%, rgba(14,18,9,0.7) 100%);
 }
 
 /* Section parallax (mid-page) */
@@ -292,7 +292,7 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
   background-image: url('https://images.unsplash.com/photo-1541339907198-e08756dedf3f?w=1600&q=80');
 }
 .phuket-band-parallax::before {
-  background-image: url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=1600&q=80');
+  background-image: url('https://images.unsplash.com/photo-1552465011-b4e21bf6e79a?w=1600&q=80');
 }
 
 /* =============================================
