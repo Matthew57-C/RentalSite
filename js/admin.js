@@ -229,47 +229,56 @@ function loadContentPanel() {
   if (ghPat && getPat()) ghPat.placeholder = 'Token saved \u2014 paste new one to replace';
 }
 
-function contentMsg(id, text, err) {
+function contentMsg(id, text, err, btnId) {
   const el = document.getElementById(id);
-  if (!el) return;
-  el.textContent = text; el.className = `save-msg${err ? ' err' : ''}`;
-  if (!err) setTimeout(() => { el.textContent = ''; }, 4000);
+  if (el) { el.textContent = text; el.className = `save-msg${err ? ' err' : ''}`; }
+  if (btnId) {
+    const btn = document.getElementById(btnId);
+    if (btn) {
+      const orig = btn.textContent;
+      btn.textContent = err ? '✕ Error' : '✓ Saved!';
+      btn.style.background = err ? 'var(--adng)' : '#2d7d46';
+      btn.disabled = true;
+      setTimeout(() => { btn.textContent = orig; btn.style.background = ''; btn.disabled = false; }, 3000);
+    }
+  }
+  if (!err) setTimeout(() => { if (el) el.textContent = ''; }, 4000);
 }
 
-function requirePat(msgId) {
+function requirePat(msgId, btnId) {
   if (getPat()) return true;
-  contentMsg(msgId, 'Add your GitHub token in Settings first.', true);
+  contentMsg(msgId, 'Add your GitHub token in Settings first.', true, btnId);
   return false;
 }
 
 document.getElementById('saveStatsBtn')?.addEventListener('click', async () => {
-  if (!requirePat('statsMsg')) return;
+  if (!requirePat('statsMsg', 'saveStatsBtn')) return;
   const patch = {};
   for (let i = 1; i <= 4; i++) {
     patch[`stat${i}Num`] = +document.getElementById(`cStat${i}Num`).value || 0;
     patch[`stat${i}Label`] = document.getElementById(`cStat${i}Label`).value.trim();
   }
-  contentMsg('statsMsg', 'Saving\u2026', false);
-  try { await saveContent(patch, getPat()); contentMsg('statsMsg', '\u2713 Saved! Live in ~30s.', false); }
-  catch (e) { contentMsg('statsMsg', e.message, true); }
+  contentMsg('statsMsg', 'Saving\u2026', false, 'saveStatsBtn');
+  try { await saveContent(patch, getPat()); contentMsg('statsMsg', 'Live in ~30s.', false, 'saveStatsBtn'); }
+  catch (e) { contentMsg('statsMsg', e.message, true, 'saveStatsBtn'); }
 });
 
 document.getElementById('saveContactBtn')?.addEventListener('click', async () => {
-  if (!requirePat('contactMsg')) return;
-  contentMsg('contactMsg', 'Saving\u2026', false);
+  if (!requirePat('contactMsg', 'saveContactBtn')) return;
+  contentMsg('contactMsg', 'Saving\u2026', false, 'saveContactBtn');
   try {
     await saveContent({ email: document.getElementById('cEmail').value.trim(), phone: document.getElementById('cPhone').value.trim() }, getPat());
-    contentMsg('contactMsg', '\u2713 Saved! Live in ~30s.', false);
-  } catch (e) { contentMsg('contactMsg', e.message, true); }
+    contentMsg('contactMsg', 'Live in ~30s.', false, 'saveContactBtn');
+  } catch (e) { contentMsg('contactMsg', e.message, true, 'saveContactBtn'); }
 });
 
 document.getElementById('saveQuoteBtn')?.addEventListener('click', async () => {
-  if (!requirePat('quoteMsg')) return;
-  contentMsg('quoteMsg', 'Saving\u2026', false);
+  if (!requirePat('quoteMsg', 'saveQuoteBtn')) return;
+  contentMsg('quoteMsg', 'Saving\u2026', false, 'saveQuoteBtn');
   try {
     await saveContent({ quote: document.getElementById('cQuote').value.trim(), cite: document.getElementById('cCite').value.trim() }, getPat());
-    contentMsg('quoteMsg', '\u2713 Saved! Live in ~30s.', false);
-  } catch (e) { contentMsg('quoteMsg', e.message, true); }
+    contentMsg('quoteMsg', 'Live in ~30s.', false, 'saveQuoteBtn');
+  } catch (e) { contentMsg('quoteMsg', e.message, true, 'saveQuoteBtn'); }
 });
 
 checkAuth();
