@@ -11,16 +11,16 @@
   "phone": "+44 1234 567 890",
   "quotes": [
     {
-      "text": "“The best accommodation I’ve ever rented. It genuinely felt like home.”",
-      "cite": "— Previous tenant, Cambridge"
+      "text": "âThe best accommodation Iâve ever rented. It genuinely felt like home.â",
+      "cite": "â Previous tenant, Cambridge"
     },
     {
-      "text": "“Exceptional value, beautifully maintained, and the location is unbeatable.”",
-      "cite": "— Student tenant, 2024"
+      "text": "âExceptional value, beautifully maintained, and the location is unbeatable.â",
+      "cite": "â Student tenant, 2024"
     },
     {
-      "text": "“The Phuket villa exceeded every expectation. We’re already planning our return.”",
-      "cite": "— Villa guest, 2025"
+      "text": "âThe Phuket villa exceeded every expectation. Weâre already planning our return.â",
+      "cite": "â Villa guest, 2025"
     }
   ]
 }
