@@ -192,18 +192,13 @@ cform?.addEventListener('submit', async e => {
   if (note) { note.style.color = ''; note.textContent = 'Sending…'; }
 
   const fd = new FormData(cform);
+  fd.append('_subject', 'New enquiry — HomeHaven');
+  fd.append('_captcha', 'false');
   try {
     const res = await fetch('https://formsubmit.co/ajax/suziezhu7717@gmail.com', {
       method: 'POST',
       headers: { 'Accept': 'application/json' },
-      body: JSON.stringify({
-        name:    fd.get('name'),
-        email:   fd.get('email'),
-        interest: fd.get('interest') || '',
-        message: fd.get('message') || '',
-        _subject: 'New enquiry — HomeHaven',
-        _captcha: 'false'
-      })
+      body: fd
     });
     const data = await res.json();
     if (data.success === 'true' || data.success === true) {
